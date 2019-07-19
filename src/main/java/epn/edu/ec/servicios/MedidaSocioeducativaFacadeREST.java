@@ -1,6 +1,5 @@
 package epn.edu.ec.servicios;
 
-import epn.edu.ec.entidades.AdolescenteInfractorUDI;
 import epn.edu.ec.entidades.MedidaSocioeducativa;
 import java.util.ArrayList;
 import java.util.List;

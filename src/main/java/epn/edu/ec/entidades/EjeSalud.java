@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package epn.edu.ec.entidades;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,14 +10,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author User
- */
 @Entity
 @Table(name = "t_eje_salud")
 @XmlRootElement
@@ -54,9 +43,8 @@ public class EjeSalud implements Serializable {
     @Column(name = "num_historia_clinica")
     private String numeroHistoriaClinica;
     
-    @Size(max = 10)
     @Column(name = "embarazo")
-    private String embarazo;
+    private Boolean embarazo;
     
     @Size(max = 10)
     @Column(name = "tiemp_gestacion_mes")
@@ -137,11 +125,11 @@ public class EjeSalud implements Serializable {
         this.numeroHistoriaClinica = numeroHistoriaClinica;
     }
 
-    public String getEmbarazo() {
+    public Boolean getEmbarazo() {
         return embarazo;
     }
 
-    public void setEmbarazo(String embarazo) {
+    public void setEmbarazo(Boolean embarazo) {
         this.embarazo = embarazo;
     }
 

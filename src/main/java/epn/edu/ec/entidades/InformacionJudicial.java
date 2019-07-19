@@ -2,7 +2,6 @@ package epn.edu.ec.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -128,6 +127,14 @@ public class InformacionJudicial implements Serializable {
 
     public void setUnidadJudicial(String unidadJudicial) {
         this.unidadJudicial = unidadJudicial;
+    }
+
+    public String getNombreUnidadJudicial() {
+        return nombreUnidadJudicial;
+    }
+
+    public void setNombreUnidadJudicial(String nombreUnidadJudicial) {
+        this.nombreUnidadJudicial = nombreUnidadJudicial;
     }
 
     public String getNombreJuez() {

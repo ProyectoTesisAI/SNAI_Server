@@ -32,7 +32,7 @@ public class ActividadesInstrumentos implements Serializable {
     private Boolean planVida;
     
     @Column(name = "plan_ind_aplic_med")
-    private Boolean planIndividualAplicaconMedida;
+    private Boolean planIndividualAplicacionMedida;
     
 
     public ActividadesInstrumentos() {
@@ -72,12 +72,12 @@ public class ActividadesInstrumentos implements Serializable {
         this.planEjecucionMedida = planEjecucionMedida;
     }
 
-    public Boolean getPlanIndividualAplicaconMedida() {
-        return planIndividualAplicaconMedida;
+    public Boolean getPlanIndividualAplicacionMedida() {
+        return planIndividualAplicacionMedida;
     }
 
-    public void setPlanIndividualAplicaconMedida(Boolean planIndividualAplicaconMedida) {
-        this.planIndividualAplicaconMedida = planIndividualAplicaconMedida;
+    public void setPlanIndividualAplicacionMedida(Boolean planIndividualAplicacionMedida) {
+        this.planIndividualAplicacionMedida = planIndividualAplicacionMedida;
     }
     
 }
