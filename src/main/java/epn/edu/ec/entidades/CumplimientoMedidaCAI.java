@@ -21,10 +21,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 public class CumplimientoMedidaCAI implements Serializable {
 
+    
     @Id
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_cumpl_medida_cai_pk")
-    private DetalleInfraccionCAI idDetallerInfraccionCAI;
+    private EjecucionMedidaCAI idEjecucionMedidaCAI;
     
     @Column(name = "fecha_cumpl_100")
     @Temporal(TemporalType.DATE)
@@ -37,12 +38,12 @@ public class CumplimientoMedidaCAI implements Serializable {
     public CumplimientoMedidaCAI() {
     }
 
-    public DetalleInfraccionCAI getIdDetallerInfraccionCAI() {
-        return idDetallerInfraccionCAI;
+    public EjecucionMedidaCAI getIdEjecucionMedidaCAI() {
+        return idEjecucionMedidaCAI;
     }
 
-    public void setIdDetallerInfraccionCAI(DetalleInfraccionCAI idDetallerInfraccionCAI) {
-        this.idDetallerInfraccionCAI = idDetallerInfraccionCAI;
+    public void setIdEjecucionMedidaCAI(EjecucionMedidaCAI idEjecucionMedidaCAI) {
+        this.idEjecucionMedidaCAI = idEjecucionMedidaCAI;
     }
 
     public Date getFechaCumplimiento100() {
@@ -61,8 +62,4 @@ public class CumplimientoMedidaCAI implements Serializable {
         this.alertaCambioMedida = alertaCambioMedida;
     }
 
-    @Override
-    public String toString() {
-        return "CumplimientoMedidaCAI{" + "idCumplimientoMedida=" + idDetallerInfraccionCAI + ", fechaCumplimiento100=" + fechaCumplimiento100 + ", alertaCambioMedida=" + alertaCambioMedida + '}';
-    }
 }

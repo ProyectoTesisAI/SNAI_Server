@@ -6,6 +6,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,12 +25,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 public class EjecucionMedidaCAI implements Serializable {
 
-
     @Id
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "id_ejecucion_medida_cai_pk", nullable = false)  
-    private DetalleInfraccionCAI idDetalleInfraccion;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_ejecucion_medida_cai_pk")
+    private Integer idEjecucionMedidaCai;
+    
+    @JoinColumn(name = "id_deta_infrac_cai_fk", referencedColumnName = "id_deta_infrac_cai_pk")
+    @ManyToOne
+    private DetalleInfraccionCAI idDetalleInfraccionCAI;
+    
     @Column(name = "fecha_aprhension")
     @Temporal(TemporalType.DATE)
     private Date fechaAprehension;
@@ -79,13 +85,14 @@ public class EjecucionMedidaCAI implements Serializable {
     public EjecucionMedidaCAI() {
     }
 
-    public DetalleInfraccionCAI getIdDetalleInfraccion() {
-        return idDetalleInfraccion;
+    public Integer getIdEjecucionMedidaCai() {
+        return idEjecucionMedidaCai;
     }
 
-    public void setIdDetalleInfraccion(DetalleInfraccionCAI idDetalleInfraccion) {
-        this.idDetalleInfraccion = idDetalleInfraccion;
+    public void setIdEjecucionMedidaCai(Integer idEjecucionMedidaCai) {
+        this.idEjecucionMedidaCai = idEjecucionMedidaCai;
     }
+
     
     public Date getFechaAprehension() {
         return fechaAprehension;
@@ -189,6 +196,14 @@ public class EjecucionMedidaCAI implements Serializable {
 
     public void setIdCai(CAI idCai) {
         this.idCai = idCai;
+    }
+
+    public DetalleInfraccionCAI getIdDetalleInfraccionCAI() {
+        return idDetalleInfraccionCAI;
+    }
+
+    public void setIdDetalleInfraccionCAI(DetalleInfraccionCAI idDetalleInfraccionCAI) {
+        this.idDetalleInfraccionCAI = idDetalleInfraccionCAI;
     }
 
  }

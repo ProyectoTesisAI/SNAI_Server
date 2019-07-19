@@ -26,7 +26,7 @@ public class InformacionCambioMedidaCAI implements Serializable {
     @Id  
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_info_camb_medid_pk_cai", nullable = false)
-    private DetalleInfraccionCAI idDetalleInfraccionCAI;
+    private EjecucionMedidaCAI idEjecucionMedidaCAI;
     
     @Column(name = "acept_juez_camb_medi")
     private Boolean aceptacionJuezCambioMedida;
@@ -55,14 +55,6 @@ public class InformacionCambioMedidaCAI implements Serializable {
     private String especificacionNuevaMedida;
 
     public InformacionCambioMedidaCAI() {
-    }
-
-    public DetalleInfraccionCAI getIdDetalleInfraccionCAI() {
-        return idDetalleInfraccionCAI;
-    }
-
-    public void setIdDetalleInfraccionCAI(DetalleInfraccionCAI idDetalleInfraccionCAI) {
-        this.idDetalleInfraccionCAI = idDetalleInfraccionCAI;
     }
     
     public Boolean getAceptacionJuezCambioMedida() {
@@ -109,6 +101,14 @@ public class InformacionCambioMedidaCAI implements Serializable {
         return alertaCambioMedida;
     }
 
+    public EjecucionMedidaCAI getIdEjecucionMedidaCAI() {
+        return idEjecucionMedidaCAI;
+    }
+
+    public void setIdEjecucionMedidaCAI(EjecucionMedidaCAI idEjecucionMedidaCAI) {
+        this.idEjecucionMedidaCAI = idEjecucionMedidaCAI;
+    }
+
     public void setAlertaCambioMedida(Date alertaCambioMedida) {
         this.alertaCambioMedida = alertaCambioMedida;
     }
@@ -120,5 +120,4 @@ public class InformacionCambioMedidaCAI implements Serializable {
     public void setEspecificacionNuevaMedida(String especificacionNuevaMedida) {
         this.especificacionNuevaMedida = especificacionNuevaMedida;
     }
-
 }
