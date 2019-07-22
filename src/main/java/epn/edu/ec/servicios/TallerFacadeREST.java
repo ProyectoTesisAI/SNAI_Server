@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.CAI;
 import epn.edu.ec.entidades.ItemTaller;
 import epn.edu.ec.entidades.Taller;
@@ -69,6 +70,7 @@ public class TallerFacadeREST extends AbstractFacade<Taller> {
 
     @GET
     @Path("TalleresSinInforme")
+    @Secured
     @Produces({MediaType.APPLICATION_JSON})
     public List<Taller> listarTalleresSinInforme() {
         Query query = em.createQuery("SELECT tp FROM Taller AS tp WHERE NOT tp.idTaller in (SELECT t.idTaller FROM Informe as i INNER JOIN i.idTaller as t)");

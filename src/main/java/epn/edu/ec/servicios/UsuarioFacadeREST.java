@@ -7,6 +7,11 @@ package epn.edu.ec.servicios;
 
 import epn.edu.ec.entidades.Rol;
 import epn.edu.ec.entidades.Usuario;
+import epn.edu.ec.filter.RestSecurityFilter;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,6 +26,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -103,6 +109,8 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
                     Usuario usuarioAux= new Usuario();
                     Rol rolAux= new Rol();
                     
+                    String token=null;
+                    
                     for (Object[] p : objetos) {
                         
                         if(p[0]!=null){
@@ -128,10 +136,11 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
                         }
                         
                         usuarioAux.setIdRol(rolAux);
+                        token=generarToken(usuarioAux.getUsuario(), usuarioAux.getIdRol().getRol());
                     }
                     GenericEntity<Usuario> entidad = new GenericEntity<Usuario>(usuarioAux) {
                     };
-                    return Response.ok().entity(entidad).build();
+                    return Response.ok().header(HttpHeaders.AUTHORIZATION, token).entity(entidad).build();
                 } else {
                     return Response.status(Response.Status.NO_CONTENT).build();
                 }
@@ -139,6 +148,26 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
         }
+    }
+    
+    private String generarToken(String usuario, String rol) {
+    	//Calculamos la fecha de expiración del token
+    	Date issueDate = new Date();
+    	Calendar calendar = Calendar.getInstance();
+    	calendar.setTime(issueDate);
+    	calendar.add(Calendar.MINUTE, 60);
+        Date expireDate = calendar.getTime();
+        
+		//Creamos el token
+        String jwtToken = Jwts.builder()
+        		.claim("roles", rol)
+                .setSubject(usuario)
+                .setIssuer("http://localhost:40040/Sistema_SNAI_Servidor/webresources/Usuario/login")
+                .setIssuedAt(issueDate)
+                .setExpiration(expireDate)
+                .signWith(SignatureAlgorithm.HS512, RestSecurityFilter.KEY)
+                .compact();
+        return jwtToken;
     }
     
     @Override
