@@ -56,7 +56,7 @@ public class InformacionCambioMedidaCAI implements Serializable {
 
     public InformacionCambioMedidaCAI() {
     }
-    
+
     public Boolean getAceptacionJuezCambioMedida() {
         return aceptacionJuezCambioMedida;
     }

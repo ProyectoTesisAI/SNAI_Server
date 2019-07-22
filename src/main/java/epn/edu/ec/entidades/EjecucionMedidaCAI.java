@@ -3,7 +3,6 @@ package epn.edu.ec.entidades;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,11 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,10 +27,6 @@ public class EjecucionMedidaCAI implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_ejecucion_medida_cai_pk")
     private Integer idEjecucionMedidaCai;
-    
-    @JoinColumn(name = "id_deta_infrac_cai_fk", referencedColumnName = "id_deta_infrac_cai_pk")
-    @ManyToOne
-    private DetalleInfraccionCAI idDetalleInfraccionCAI;
     
     @Column(name = "fecha_aprhension")
     @Temporal(TemporalType.DATE)
@@ -81,6 +74,10 @@ public class EjecucionMedidaCAI implements Serializable {
     @JoinColumn(name = "id_cai_fk")
     @ManyToOne
     private CAI idCai;
+    
+    @JoinColumn(name = "id_deta_infrac_cai_fk", referencedColumnName = "id_deta_infrac_cai_pk")
+    @ManyToOne
+    private DetalleInfraccionCAI idDetalleInfraccionCAI;
 
     public EjecucionMedidaCAI() {
     }
