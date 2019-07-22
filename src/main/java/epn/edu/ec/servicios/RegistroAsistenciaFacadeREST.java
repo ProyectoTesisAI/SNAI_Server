@@ -168,7 +168,7 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
         } else {
             try {
                           
-                Query query = em.createNativeQuery("SELECT a.id_adolescente_pk as id_Adolescente, a.nombres, a.apellidos, a.cedula, aa.asistio, aa.id_reg_asistencia_fk FROM t_asistencia_adolescente as aa INNER JOIN t_adolescente as a ON a.id_adolescente_pk = aa.id_adolescente_fk WHERE aa.id_reg_asistencia_fk = ?1");
+                Query query = em.createNativeQuery("SELECT aa.id_asistencia_adolescente_pk, a.id_adolescente_pk as id_Adolescente, a.nombres, a.apellidos, a.cedula, aa.asistio, aa.id_reg_asistencia_fk FROM t_asistencia_adolescente as aa INNER JOIN t_adolescente as a ON a.id_adolescente_pk = aa.id_adolescente_fk WHERE aa.id_reg_asistencia_fk = ?1");
                 query.setParameter(1, taller.getIdTaller());
 
                 List<Object[]> lista = (List<Object[]>) query.getResultList();
@@ -181,24 +181,27 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
                         AsistenciaAdolescente asistencia= new  AsistenciaAdolescente();
                         RegistroAsistencia registro= new  RegistroAsistencia();
                         Taller tallerAux= new Taller();
-                        
                         if(a[0]!=null){
-                            adolescente.setIdAdolescenteInfractor(Integer.parseInt(a[0].toString()));
+                            asistencia.setIdAsistenciaAdolescente(Integer.parseInt(a[0].toString()));
                         }
+                        
                         if(a[1]!=null){
-                            adolescente.setNombres(a[1].toString());
+                            adolescente.setIdAdolescenteInfractor(Integer.parseInt(a[1].toString()));
                         }
                         if(a[2]!=null){
-                            adolescente.setApellidos(a[2].toString());
+                            adolescente.setNombres(a[2].toString());
                         }
                         if(a[3]!=null){
-                            adolescente.setCedula(a[3].toString());
+                            adolescente.setApellidos(a[3].toString());
                         }
                         if(a[4]!=null){
-                            asistencia.setAsistio(Boolean.valueOf(a[4].toString()));
+                            adolescente.setCedula(a[4].toString());
                         }
                         if(a[5]!=null){
-                            tallerAux.setIdTaller(Integer.parseInt(a[5].toString()));
+                            asistencia.setAsistio(Boolean.valueOf(a[5].toString()));
+                        }
+                        if(a[6]!=null){
+                            tallerAux.setIdTaller(Integer.parseInt(a[6].toString()));
                             registro.setIdTaller(tallerAux);
                                                  
                         }
