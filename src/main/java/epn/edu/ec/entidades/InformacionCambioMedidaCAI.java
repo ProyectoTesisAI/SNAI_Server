@@ -26,7 +26,7 @@ public class InformacionCambioMedidaCAI implements Serializable {
     @Id  
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_info_camb_medid_pk_cai", nullable = false)
-    private DetalleInfraccionCAI idDetalleInfraccionCAI;
+    private EjecucionMedidaCAI idEjecucionMedidaCAI;
     
     @Column(name = "acept_juez_camb_medi")
     private Boolean aceptacionJuezCambioMedida;
@@ -57,14 +57,14 @@ public class InformacionCambioMedidaCAI implements Serializable {
     public InformacionCambioMedidaCAI() {
     }
 
-    public DetalleInfraccionCAI getIdDetalleInfraccionCAI() {
-        return idDetalleInfraccionCAI;
+    public EjecucionMedidaCAI getIdEjecucionMedidaCAI() {
+        return idEjecucionMedidaCAI;
     }
 
-    public void setIdDetalleInfraccionCAI(DetalleInfraccionCAI idDetalleInfraccionCAI) {
-        this.idDetalleInfraccionCAI = idDetalleInfraccionCAI;
+    public void setIdEjecucionMedidaCAI(EjecucionMedidaCAI idEjecucionMedidaCAI) {
+        this.idEjecucionMedidaCAI = idEjecucionMedidaCAI;
     }
-    
+
     public Boolean getAceptacionJuezCambioMedida() {
         return aceptacionJuezCambioMedida;
     }

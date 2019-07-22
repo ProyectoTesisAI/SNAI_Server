@@ -2,7 +2,6 @@ package epn.edu.ec.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +12,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -27,7 +25,7 @@ public class MotivoEgresoCAI implements Serializable {
     @Id
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_motivo_egreso_cai_pk", nullable = false)    
-    private AdolescenteInfractorCAI idAdolescenteInfractorCAI;
+    private EjecucionMedidaCAI idEjecucionMedidaCAI;
     
     @Size(max = 50)
     @Column(name = "motivo_salida")
@@ -44,12 +42,12 @@ public class MotivoEgresoCAI implements Serializable {
     public MotivoEgresoCAI() {
     }
 
-    public AdolescenteInfractorCAI getIdAdolescenteInfractorCAI() {
-        return idAdolescenteInfractorCAI;
+    public EjecucionMedidaCAI getIdEjecucionMedidaCAI() {
+        return idEjecucionMedidaCAI;
     }
 
-    public void setIdAdolescenteInfractorCAI(AdolescenteInfractorCAI idAdolescenteInfractorCAI) {
-        this.idAdolescenteInfractorCAI = idAdolescenteInfractorCAI;
+    public void setIdEjecucionMedidaCAI(EjecucionMedidaCAI idEjecucionMedidaCAI) {
+        this.idEjecucionMedidaCAI = idEjecucionMedidaCAI;
     }
 
     public String getMotivoSalida() {
@@ -76,9 +74,5 @@ public class MotivoEgresoCAI implements Serializable {
         this.idCaiTraslado = idCaiTraslado;
     }
 
-    @Override
-    public String toString() {
-        return "MotivoEgresoCAI{" + "idMotivoEgreso=" + idAdolescenteInfractorCAI + ", motivoSalida=" + motivoSalida + ", fechaSalidaCentro=" + fechaSalidaCentro + ", caiTrasladoFk=" + idCaiTraslado + '}';
-    }
     
 }
