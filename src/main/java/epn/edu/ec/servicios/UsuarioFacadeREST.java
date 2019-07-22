@@ -135,11 +135,14 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
                         }
                         
                         usuarioAux.setIdRol(rolAux);
+                        
                         token=generarToken(usuarioAux.getUsuario(), usuarioAux.getIdRol().getRol());
+                        usuarioAux.setToken(token);
                     }
                     GenericEntity<Usuario> entidad = new GenericEntity<Usuario>(usuarioAux) {
                     };
-                    return Response.ok().header(HttpHeaders.AUTHORIZATION, token).entity(entidad).build();
+                    //return Response.ok().header(HttpHeaders.AUTHORIZATION, token).entity(entidad).build();
+                    return Response.ok().entity(entidad).build();
                 } else {
                     return Response.status(Response.Status.NO_CONTENT).build();
                 }
