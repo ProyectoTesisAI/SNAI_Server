@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.AdolescenteInfractor;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -20,11 +16,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-/**
- *
- * @author User
- */
 @Stateless
+@Secured
 @Path("Adolescente_Infractor")
 public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteInfractor> {
 
@@ -40,13 +33,6 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
     @Consumes({MediaType.APPLICATION_JSON})
     public AdolescenteInfractor crear(AdolescenteInfractor entidad) {
         return super.crear(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public AdolescenteInfractor editar(@PathParam("id") Integer id, AdolescenteInfractor entidad) {
-        return super.editar(entidad);
     }
 
     @DELETE

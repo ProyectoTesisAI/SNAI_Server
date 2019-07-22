@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.AdolescenteInfractorUDI;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
+@Secured
 @Path("Adolescente_Udi")
 public class AdolescenteInfractorUDIFacadeREST extends AbstractFacade<AdolescenteInfractorUDI> {
 
@@ -31,13 +33,6 @@ public class AdolescenteInfractorUDIFacadeREST extends AbstractFacade<Adolescent
     @Consumes({MediaType.APPLICATION_JSON})
     public AdolescenteInfractorUDI crear(AdolescenteInfractorUDI entidad) {
         return super.crear(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public AdolescenteInfractorUDI editar(@PathParam("id") Integer id, AdolescenteInfractorUDI entidad) {
-        return super.editar(entidad);
     }
 
     @DELETE

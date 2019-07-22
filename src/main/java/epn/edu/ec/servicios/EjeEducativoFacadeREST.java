@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.EjeEducativo;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
+@Secured
 @Path("Eje_Educativo")
 public class EjeEducativoFacadeREST extends AbstractFacade<EjeEducativo> {
 
@@ -36,13 +38,6 @@ public class EjeEducativoFacadeREST extends AbstractFacade<EjeEducativo> {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public EjeEducativo guardarEjeEducativo(EjeEducativo entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public EjeEducativo editar(@PathParam("id") Integer id, EjeEducativo entidad) {
         return super.editar(entidad);
     }
 

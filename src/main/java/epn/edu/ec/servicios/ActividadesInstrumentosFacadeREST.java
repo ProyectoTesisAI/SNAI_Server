@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.ActividadesInstrumentos;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
+@Secured
 @Path("Actividades_Instrumentos")
 public class ActividadesInstrumentosFacadeREST extends AbstractFacade<ActividadesInstrumentos> {
 
@@ -37,13 +39,6 @@ public class ActividadesInstrumentosFacadeREST extends AbstractFacade<Actividade
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public ActividadesInstrumentos guardarActividadesInstrumentos(ActividadesInstrumentos entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public ActividadesInstrumentos editar(@PathParam("id") Integer id, ActividadesInstrumentos entidad) {
         return super.editar(entidad);
     }
 

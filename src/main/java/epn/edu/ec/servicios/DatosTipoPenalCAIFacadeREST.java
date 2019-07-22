@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.DatosTipoPenalCAI;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
+@Secured
 @Path("Datos_Tipo_Penal_Cai")
 public class DatosTipoPenalCAIFacadeREST extends AbstractFacade<DatosTipoPenalCAI> {
 
@@ -31,13 +33,6 @@ public class DatosTipoPenalCAIFacadeREST extends AbstractFacade<DatosTipoPenalCA
     @Consumes({MediaType.APPLICATION_JSON})
     public DatosTipoPenalCAI crear(DatosTipoPenalCAI entidad) {
         return super.crear(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public DatosTipoPenalCAI editar(@PathParam("id") Integer id, DatosTipoPenalCAI entidad) {
-        return super.editar(entidad);
     }
 
     @DELETE
