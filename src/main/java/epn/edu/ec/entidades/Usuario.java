@@ -68,6 +68,8 @@ public class Usuario implements Serializable, Principal {
     @Column(name = "activo")
     private Boolean activo;
     
+    private String token;
+    
     @JoinColumn(name = "id_rol_fk", referencedColumnName = "id_rol_pk")
     @ManyToOne
     private Rol idRol;
@@ -149,6 +151,14 @@ public class Usuario implements Serializable, Principal {
 
     public void setIdRol(Rol idRol) {
         this.idRol = idRol;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
