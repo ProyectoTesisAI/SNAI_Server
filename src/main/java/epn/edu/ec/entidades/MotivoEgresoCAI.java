@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 public class MotivoEgresoCAI implements Serializable {
 
-
     @Id
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_motivo_egreso_cai_pk", nullable = false)    
@@ -40,14 +39,6 @@ public class MotivoEgresoCAI implements Serializable {
     private CAI idCaiTraslado;
 
     public MotivoEgresoCAI() {
-    }
-
-    public EjecucionMedidaCAI getIdEjecucionMedidaCAI() {
-        return idEjecucionMedidaCAI;
-    }
-
-    public void setIdEjecucionMedidaCAI(EjecucionMedidaCAI idEjecucionMedidaCAI) {
-        this.idEjecucionMedidaCAI = idEjecucionMedidaCAI;
     }
 
     public String getMotivoSalida() {
@@ -72,7 +63,14 @@ public class MotivoEgresoCAI implements Serializable {
 
     public void setIdCaiTraslado(CAI idCaiTraslado) {
         this.idCaiTraslado = idCaiTraslado;
+    }   
+
+    public EjecucionMedidaCAI getIdEjecucionMedidaCAI() {
+        return idEjecucionMedidaCAI;
     }
 
-    
+    public void setIdEjecucionMedidaCAI(EjecucionMedidaCAI idEjecucionMedidaCAI) {
+        this.idEjecucionMedidaCAI = idEjecucionMedidaCAI;
+    }    
+
 }

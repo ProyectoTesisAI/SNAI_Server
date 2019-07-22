@@ -57,14 +57,6 @@ public class InformacionCambioMedidaCAI implements Serializable {
     public InformacionCambioMedidaCAI() {
     }
 
-    public EjecucionMedidaCAI getIdEjecucionMedidaCAI() {
-        return idEjecucionMedidaCAI;
-    }
-
-    public void setIdEjecucionMedidaCAI(EjecucionMedidaCAI idEjecucionMedidaCAI) {
-        this.idEjecucionMedidaCAI = idEjecucionMedidaCAI;
-    }
-
     public Boolean getAceptacionJuezCambioMedida() {
         return aceptacionJuezCambioMedida;
     }
@@ -109,6 +101,14 @@ public class InformacionCambioMedidaCAI implements Serializable {
         return alertaCambioMedida;
     }
 
+    public EjecucionMedidaCAI getIdEjecucionMedidaCAI() {
+        return idEjecucionMedidaCAI;
+    }
+
+    public void setIdEjecucionMedidaCAI(EjecucionMedidaCAI idEjecucionMedidaCAI) {
+        this.idEjecucionMedidaCAI = idEjecucionMedidaCAI;
+    }
+
     public void setAlertaCambioMedida(Date alertaCambioMedida) {
         this.alertaCambioMedida = alertaCambioMedida;
     }
@@ -120,5 +120,4 @@ public class InformacionCambioMedidaCAI implements Serializable {
     public void setEspecificacionNuevaMedida(String especificacionNuevaMedida) {
         this.especificacionNuevaMedida = especificacionNuevaMedida;
     }
-
 }

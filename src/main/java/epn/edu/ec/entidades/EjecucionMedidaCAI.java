@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 public class EjecucionMedidaCAI implements Serializable {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -90,6 +89,7 @@ public class EjecucionMedidaCAI implements Serializable {
     public void setIdEjecucionMedidaCai(Integer idEjecucionMedidaCai) {
         this.idEjecucionMedidaCai = idEjecucionMedidaCai;
     }
+
     
     public Date getFechaAprehension() {
         return fechaAprehension;
@@ -202,5 +202,5 @@ public class EjecucionMedidaCAI implements Serializable {
     public void setIdDetalleInfraccionCAI(DetalleInfraccionCAI idDetalleInfraccionCAI) {
         this.idDetalleInfraccionCAI = idDetalleInfraccionCAI;
     }
-    
+
  }
