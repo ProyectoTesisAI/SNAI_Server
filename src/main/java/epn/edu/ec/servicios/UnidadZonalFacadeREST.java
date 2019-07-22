@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.UnidadZonal;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 @Stateless
 @Path("Unidad_Zonal")
+@Secured
 public class UnidadZonalFacadeREST extends AbstractFacade<UnidadZonal> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -39,13 +41,6 @@ public class UnidadZonalFacadeREST extends AbstractFacade<UnidadZonal> {
         return super.editar(entidad);
     }
     
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public UnidadZonal editar(@PathParam("id") Integer id, UnidadZonal entidad) {
-        return super.editar(entidad);
-    }
-
     @DELETE
     @Path("{id}")
     public void eliminar(@PathParam("id") Integer id) {

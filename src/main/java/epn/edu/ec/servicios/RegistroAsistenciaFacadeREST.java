@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.AdolescenteInfractor;
 import epn.edu.ec.entidades.AsistenciaAdolescente;
 import epn.edu.ec.entidades.CAI;
@@ -26,6 +27,7 @@ import javax.ws.rs.core.Response;
 
 @Stateless
 @Path("Registro_Asistencia")
+@Secured
 public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsistencia> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -45,13 +47,6 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public RegistroAsistencia guardarRegistroAsistencia(RegistroAsistencia entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public RegistroAsistencia editar(@PathParam("id") Integer id, RegistroAsistencia entidad) {
         return super.editar(entidad);
     }
 

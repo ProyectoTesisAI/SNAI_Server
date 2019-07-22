@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.MedidaSocioeducativa;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.Response;
 
 @Stateless
 @Path("Medida_Socioeducativa")
+@Secured
 public class MedidaSocioeducativaFacadeREST extends AbstractFacade<MedidaSocioeducativa> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -40,13 +42,6 @@ public class MedidaSocioeducativaFacadeREST extends AbstractFacade<MedidaSocioed
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public MedidaSocioeducativa guardarMedidaSocioeducativa(MedidaSocioeducativa entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public MedidaSocioeducativa editar(@PathParam("id") Integer id, MedidaSocioeducativa entidad) {
         return super.editar(entidad);
     }
 

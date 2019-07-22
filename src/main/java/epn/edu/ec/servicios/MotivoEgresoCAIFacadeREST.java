@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.MotivoEgresoCAI;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 @Stateless
 @Path("Motivo_Egreso_Cai")
+@Secured
 public class MotivoEgresoCAIFacadeREST extends AbstractFacade<MotivoEgresoCAI> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -36,13 +38,6 @@ public class MotivoEgresoCAIFacadeREST extends AbstractFacade<MotivoEgresoCAI> {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public MotivoEgresoCAI guardarMotivoEgresoCAI(MotivoEgresoCAI entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public MotivoEgresoCAI editar(@PathParam("id") Integer id, MotivoEgresoCAI entidad) {
         return super.editar(entidad);
     }
 

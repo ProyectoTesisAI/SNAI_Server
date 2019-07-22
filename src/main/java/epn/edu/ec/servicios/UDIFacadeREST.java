@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.UDI;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 @Stateless
 @Path("Udi")
+@Secured
 public class UDIFacadeREST extends AbstractFacade<UDI> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -31,13 +33,6 @@ public class UDIFacadeREST extends AbstractFacade<UDI> {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public UDI crear(UDI entidad) {
         return super.crear(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public UDI editar(@PathParam("id") Integer id, UDI entidad) {
-        return super.editar(entidad);
     }
 
     @DELETE

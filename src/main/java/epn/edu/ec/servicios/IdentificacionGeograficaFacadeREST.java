@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.IdentificacionGeografica;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 @Stateless
 @Path("Identificacion_Geografica")
+@Secured
 public class IdentificacionGeograficaFacadeREST extends AbstractFacade<IdentificacionGeografica> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -36,13 +38,6 @@ public class IdentificacionGeograficaFacadeREST extends AbstractFacade<Identific
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public IdentificacionGeografica guardarIdentificacionGeografica(IdentificacionGeografica entidad) {
-        return super.editar(entidad);
-    }
-    
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public IdentificacionGeografica editar(@PathParam("id") Integer id, IdentificacionGeografica entidad) {
         return super.editar(entidad);
     }
 

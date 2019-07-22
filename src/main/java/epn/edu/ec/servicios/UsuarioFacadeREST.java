@@ -5,6 +5,7 @@
  */
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.Rol;
 import epn.edu.ec.entidades.Usuario;
 import epn.edu.ec.filter.RestSecurityFilter;
@@ -46,6 +47,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     }
 
     @POST
+    @Secured
     @Override
     @Consumes({MediaType.APPLICATION_JSON})
     public Usuario crear(Usuario entidad) {
@@ -54,26 +56,22 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     }
     
     @PUT
+    @Secured
     @Consumes({MediaType.APPLICATION_JSON})
     public Usuario guardarUsuario(Usuario entidad) {
         super.editar(entidad);
         return entidad;
     }
 
-    @PUT
-    @Path("{id}")
-    @Consumes({ MediaType.APPLICATION_JSON})
-    public void editar(@PathParam("id") Integer id, Usuario entity) {
-        super.editar(entity);
-    }
-
     @DELETE
+    @Secured
     @Path("{id}")
     public void eliminar(@PathParam("id") Integer id) {
         super.eliminar(super.buscarPorId(id));
     }
 
     @GET
+    @Secured
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Usuario buscarPorId(@PathParam("id") Integer id) {
@@ -81,6 +79,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     }
 
     @GET
+    @Secured
     @Override
     @Produces({MediaType.APPLICATION_JSON})
     public List<Usuario> listarTodo() {

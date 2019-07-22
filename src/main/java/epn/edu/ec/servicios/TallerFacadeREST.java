@@ -25,6 +25,7 @@ import javax.ws.rs.core.Response;
 
 @Stateless
 @Path("Taller")
+@Secured
 public class TallerFacadeREST extends AbstractFacade<Taller> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -48,13 +49,6 @@ public class TallerFacadeREST extends AbstractFacade<Taller> {
         return taller;
     }
 
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Taller editar(@PathParam("id") Integer id, Taller entidad) {
-        return super.editar(entidad);
-    }
-
     @DELETE
     @Path("{id}")
     public void eliminar(@PathParam("id") Integer id) {
@@ -70,7 +64,6 @@ public class TallerFacadeREST extends AbstractFacade<Taller> {
 
     @GET
     @Path("TalleresSinInforme")
-    @Secured
     @Produces({MediaType.APPLICATION_JSON})
     public List<Taller> listarTalleresSinInforme() {
         Query query = em.createQuery("SELECT tp FROM Taller AS tp WHERE NOT tp.idTaller in (SELECT t.idTaller FROM Informe as i INNER JOIN i.idTaller as t)");

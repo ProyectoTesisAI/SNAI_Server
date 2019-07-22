@@ -5,6 +5,7 @@
  */
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.Rol;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -26,6 +27,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("Rol")
+@Secured
 public class RolFacadeREST extends AbstractFacade<Rol> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -48,13 +50,6 @@ public class RolFacadeREST extends AbstractFacade<Rol> {
     public Rol guardarRol(Rol entidad) {
         super.editar(entidad);
         return entidad;
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void editar(@PathParam("id") Integer id, Rol entity) {
-        super.editar(entity);
     }
 
     @DELETE
