@@ -1,25 +1,35 @@
 package epn.edu.ec.servicios;
 
-import java.util.Set;
-import javax.ws.rs.core.Application;
+import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 @javax.ws.rs.ApplicationPath("webresources")
-public class ApplicationConfig extends Application {
+public class ApplicationConfig extends ResourceConfig {
 
+    public ApplicationConfig() {
+        packages("epn.edu.ec");
+        register(JacksonFeatures.class);
+        register(RolesAllowedDynamicFeature.class);
+    }
+    
+/*
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new java.util.HashSet<>();
         addRestResourceClasses(resources);
         return resources;
     }
-
+*/
     /**
      * Do not modify addRestResourceClasses() method.
      * It is automatically populated with
      * all resources defined in the project.
      * If required, comment out calling this method in getClasses().
      */
+  /*  
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(epn.edu.ec.filter.RestSecurityFilter.class);
         resources.add(epn.edu.ec.servicios.ActividadesInstrumentosFacadeREST.class);
         resources.add(epn.edu.ec.servicios.AdolescenteInfractorCAIFacadeREST.class);
         resources.add(epn.edu.ec.servicios.AdolescenteInfractorFacadeREST.class);
@@ -52,5 +62,5 @@ public class ApplicationConfig extends Application {
         resources.add(epn.edu.ec.servicios.UnidadZonalFacadeREST.class);
         resources.add(epn.edu.ec.servicios.UsuarioFacadeREST.class);
     }
-    
+  */  
 }
