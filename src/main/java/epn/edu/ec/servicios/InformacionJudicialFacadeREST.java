@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.InformacionJudicial;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 @Stateless
 @Path("Informacion_Judicial")
+@Secured
 public class InformacionJudicialFacadeREST extends AbstractFacade<InformacionJudicial> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -36,13 +38,6 @@ public class InformacionJudicialFacadeREST extends AbstractFacade<InformacionJud
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public InformacionJudicial guardarInformacionJudicial(InformacionJudicial entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public InformacionJudicial editar(@PathParam("id") Integer id, InformacionJudicial entidad) {
         return super.editar(entidad);
     }
 

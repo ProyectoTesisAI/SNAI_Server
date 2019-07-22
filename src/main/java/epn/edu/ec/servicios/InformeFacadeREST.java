@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.Informe;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 @Stateless
 @Path("Informe")
+@Secured
 public class InformeFacadeREST extends AbstractFacade<Informe> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -36,13 +38,6 @@ public class InformeFacadeREST extends AbstractFacade<Informe> {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public Informe guardarInforme(Informe entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Informe editar(@PathParam("id") Integer id, Informe entidad) {
         return super.editar(entidad);
     }
 

@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.Representante;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 
 @Stateless
 @Path("Representante")
+@Secured
 public class RepresentanteFacadeREST extends AbstractFacade<Representante> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -37,13 +39,6 @@ public class RepresentanteFacadeREST extends AbstractFacade<Representante> {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public Representante guardarRepresentante(Representante entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Representante editar(@PathParam("id") Integer id, Representante entidad) {
         return super.editar(entidad);
     }
 

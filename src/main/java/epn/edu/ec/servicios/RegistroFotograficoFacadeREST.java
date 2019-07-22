@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.Informe;
 import epn.edu.ec.entidades.RegistroFotografico;
 import java.io.ByteArrayOutputStream;
@@ -25,6 +26,7 @@ import javax.ws.rs.core.MediaType;
 
 @Stateless
 @Path("Registro_Fotografico")
+@Secured
 public class RegistroFotograficoFacadeREST extends AbstractFacade<RegistroFotografico> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")

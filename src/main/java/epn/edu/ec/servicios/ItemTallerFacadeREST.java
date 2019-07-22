@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.ItemTaller;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 @Stateless
 @Path("Item_Taller")
+@Secured
 public class ItemTallerFacadeREST extends AbstractFacade<ItemTaller> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -36,13 +38,6 @@ public class ItemTallerFacadeREST extends AbstractFacade<ItemTaller> {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public ItemTaller guardarItemTaller(ItemTaller entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public ItemTaller editar(@PathParam("id") Integer id, ItemTaller entidad) {
         return super.editar(entidad);
     }
 

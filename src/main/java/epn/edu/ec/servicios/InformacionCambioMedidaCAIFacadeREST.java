@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.InformacionCambioMedidaCAI;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 @Stateless
 @Path("Informacion_Cambio_Medida_Cai")
+@Secured
 public class InformacionCambioMedidaCAIFacadeREST extends AbstractFacade<InformacionCambioMedidaCAI> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -36,13 +38,6 @@ public class InformacionCambioMedidaCAIFacadeREST extends AbstractFacade<Informa
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public InformacionCambioMedidaCAI guardarInformacionCambioMedidaCAI(InformacionCambioMedidaCAI entidad) {
-        return super.editar(entidad);
-    }
-    
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public InformacionCambioMedidaCAI editar(@PathParam("id") Integer id, InformacionCambioMedidaCAI entidad) {
         return super.editar(entidad);
     }
 
