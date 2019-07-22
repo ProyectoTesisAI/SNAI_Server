@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.EjeLaboral;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
+@Secured
 @Path("Eje_Laboral")
 public class EjeLaboralFacadeREST extends AbstractFacade<EjeLaboral> {
 
@@ -36,13 +38,6 @@ public class EjeLaboralFacadeREST extends AbstractFacade<EjeLaboral> {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public EjeLaboral guardarEjeLaboral( EjeLaboral entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public EjeLaboral editar(@PathParam("id") Integer id, EjeLaboral entidad) {
         return super.editar(entidad);
     }
 

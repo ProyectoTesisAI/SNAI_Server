@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.DetalleInfraccionCAI;
 import epn.edu.ec.entidades.EjecucionMedidaCAI;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Stateless
+@Secured
 @Path("Ejecucion_Medida_Cai")
 public class EjecucionMedidaCAIFacadeREST extends AbstractFacade<EjecucionMedidaCAI> {
 
@@ -41,13 +43,6 @@ public class EjecucionMedidaCAIFacadeREST extends AbstractFacade<EjecucionMedida
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public EjecucionMedidaCAI guardarEjecucionMedidaCAI(EjecucionMedidaCAI entidad) {
-        return super.editar(entidad);
-    }
-    
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public EjecucionMedidaCAI editar(@PathParam("id") Integer id, EjecucionMedidaCAI entidad) {
         return super.editar(entidad);
     }
 

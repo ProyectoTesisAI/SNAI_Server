@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.DatosProvinciaCanton;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
+@Secured
 @Path("Datos_Provincia_Canton")
 public class DatosProvinciaCantonFacadeREST extends AbstractFacade<DatosProvinciaCanton> {
 
@@ -31,13 +33,6 @@ public class DatosProvinciaCantonFacadeREST extends AbstractFacade<DatosProvinci
     @Consumes({MediaType.APPLICATION_JSON})
     public DatosProvinciaCanton crear(DatosProvinciaCanton entidad) {
         return super.crear(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public DatosProvinciaCanton editar(@PathParam("id") Integer id, DatosProvinciaCanton entidad) {
-        return super.editar(entidad);
     }
 
     @DELETE

@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.EstadoCumplimientoMedida;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
+@Secured
 @Path("Estado_Cumplimiento_Medida")
 public class EstadoCumplimientoMedidaFacadeREST extends AbstractFacade<EstadoCumplimientoMedida> {
 
@@ -36,13 +38,6 @@ public class EstadoCumplimientoMedidaFacadeREST extends AbstractFacade<EstadoCum
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public EstadoCumplimientoMedida guardarEstadoCumplimientoMedida(EstadoCumplimientoMedida entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public EstadoCumplimientoMedida editar(@PathParam("id") Integer id, EstadoCumplimientoMedida entidad) {
         return super.editar(entidad);
     }
 

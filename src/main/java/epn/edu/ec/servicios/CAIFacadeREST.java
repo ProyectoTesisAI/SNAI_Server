@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.CAI;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
+@Secured
 @Path("Cai")
 public class CAIFacadeREST extends AbstractFacade<CAI> {
 
@@ -31,13 +33,6 @@ public class CAIFacadeREST extends AbstractFacade<CAI> {
     @Consumes({MediaType.APPLICATION_JSON})
     public CAI crear(CAI entity) {
         return super.crear(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public CAI editar(@PathParam("id") Integer id, CAI entity) {
-        return super.editar(entity);
     }
 
     @DELETE

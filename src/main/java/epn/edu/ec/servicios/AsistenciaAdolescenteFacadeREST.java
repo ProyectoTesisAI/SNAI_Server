@@ -1,6 +1,6 @@
 package epn.edu.ec.servicios;
 
-import epn.edu.ec.entidades.AsistenciaAdolescente;
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.AsistenciaAdolescente;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
+@Secured
 @Path("Registro_Asistencia_Adolescente")
 public class AsistenciaAdolescenteFacadeREST extends AbstractFacade<AsistenciaAdolescente> {
 
@@ -37,13 +38,6 @@ public class AsistenciaAdolescenteFacadeREST extends AbstractFacade<AsistenciaAd
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public AsistenciaAdolescente guardarAsistenciaAdolescente(AsistenciaAdolescente entidad) {
-        return super.editar(entidad);
-    }
-    
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public AsistenciaAdolescente editar(@PathParam("id") Integer id, AsistenciaAdolescente entidad) {
         return super.editar(entidad);
     }
 

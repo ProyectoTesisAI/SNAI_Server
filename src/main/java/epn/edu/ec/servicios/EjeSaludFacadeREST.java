@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.EjeSalud;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
+@Secured
 @Path("Eje_Salud")
 public class EjeSaludFacadeREST extends AbstractFacade<EjeSalud> {
 
@@ -36,13 +38,6 @@ public class EjeSaludFacadeREST extends AbstractFacade<EjeSalud> {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public EjeSalud guardarEjeSalud(EjeSalud entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public EjeSalud editar(@PathParam("id") Integer id, EjeSalud entidad) {
         return super.editar(entidad);
     }
 

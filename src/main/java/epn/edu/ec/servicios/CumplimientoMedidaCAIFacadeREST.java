@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.CumplimientoMedidaCAI;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
+@Secured
 @Path("Cumplimiento_Medida_Cai")
 public class CumplimientoMedidaCAIFacadeREST extends AbstractFacade<CumplimientoMedidaCAI> {
 
@@ -36,13 +38,6 @@ public class CumplimientoMedidaCAIFacadeREST extends AbstractFacade<Cumplimiento
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public CumplimientoMedidaCAI guardarCumplimientoMedidaCAI(CumplimientoMedidaCAI entidad) {
-        return super.editar(entidad);
-    }
-    
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public CumplimientoMedidaCAI editar(@PathParam("id") Integer id, CumplimientoMedidaCAI entidad) {
         return super.editar(entidad);
     }
 

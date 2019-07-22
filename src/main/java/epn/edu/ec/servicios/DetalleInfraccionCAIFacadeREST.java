@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.AdolescenteInfractorCAI;
 import epn.edu.ec.entidades.DetalleInfraccionCAI;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Stateless
+@Secured
 @Path("Detalle_Infraccion_Cai")
 public class DetalleInfraccionCAIFacadeREST extends AbstractFacade<DetalleInfraccionCAI> {
 
@@ -41,13 +43,6 @@ public class DetalleInfraccionCAIFacadeREST extends AbstractFacade<DetalleInfrac
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public DetalleInfraccionCAI guardarDetalleInfraccionCAI(DetalleInfraccionCAI entidad) {
-        return super.editar(entidad);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public DetalleInfraccionCAI editar(@PathParam("id") Integer id, DetalleInfraccionCAI entidad) {
         return super.editar(entidad);
     }
 
