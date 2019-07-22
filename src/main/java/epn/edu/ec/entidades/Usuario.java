@@ -6,6 +6,7 @@
 package epn.edu.ec.entidades;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -32,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, Principal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -148,6 +149,11 @@ public class Usuario implements Serializable {
 
     public void setIdRol(Rol idRol) {
         this.idRol = idRol;
+    }
+
+    @Override
+    public String getName() {
+        return usuario;
     }
 
        
