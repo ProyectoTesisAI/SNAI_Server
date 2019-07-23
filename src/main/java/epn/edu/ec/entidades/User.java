@@ -5,78 +5,24 @@
  */
 package epn.edu.ec.entidades;
 
-import java.io.Serializable;
-import java.security.Principal;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-
 /**
  *
  * @author User
  */
-@Entity
-@Table(name = "t_usuario")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
-public class Usuario implements Serializable, Principal {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id_usuario_pk")
+public class User {
+    
     private Integer idUsuario;
-    
-    @Size(max = 50)
-    @Column(name = "nombres")
     private String nombres;
-    
-    @Size(max = 50)
-    @Column(name = "apellidos")
     private String apellidos;
-    
-    @Size(max = 10)
-    @Column(name = "cedula")
     private String cedula;
-    
-    @Size(max = 10)
-    @Column(name = "telefono")
     private String telefono;
-    
-    @Size(max = 25)
-    @Column(name = "usuario")
     private String usuario;
-    
-    @Size(max = 25)
-    @Column(name = "contrasenia")
     private String contraseña;
-    
-    @Column(name = "activo")
     private Boolean activo;
-    
-    @JoinColumn(name = "id_rol_fk", referencedColumnName = "id_rol_pk")
-    @ManyToOne
+    private String token;
     private Rol idRol;
 
-    public Usuario() {
-    }
-
-    public Usuario(Integer idUsuarioPk) {
-        this.idUsuario = idUsuarioPk;
+    public User() {
     }
 
     public Integer getIdUsuario() {
@@ -150,11 +96,12 @@ public class Usuario implements Serializable, Principal {
     public void setIdRol(Rol idRol) {
         this.idRol = idRol;
     }
-    
-    @Override
-    public String getName() {
-        return usuario;
+
+    public String getToken() {
+        return token;
     }
 
-       
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

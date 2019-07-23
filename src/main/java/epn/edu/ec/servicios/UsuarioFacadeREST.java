@@ -8,6 +8,7 @@ package epn.edu.ec.servicios;
 import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.Rol;
 import epn.edu.ec.entidades.Usuario;
+import epn.edu.ec.entidades.User;
 import epn.edu.ec.filter.RestSecurityFilter;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -105,48 +106,46 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
                 
                 if (objetos != null && objetos.size() > 0) {
                 
-                    Usuario usuarioAux= new Usuario();
+                    User user= new User();
                     Rol rolAux= new Rol();
-                    
-                    String token=null;
                     
                     for (Object[] p : objetos) {
                         
                         if(p[0]!=null){
-                            usuarioAux.setIdUsuario(Integer.parseInt(p[0].toString()));
+                            user.setIdUsuario(Integer.parseInt(p[0].toString()));
                         }
                         if(p[1]!=null){
-                            usuarioAux.setNombres(p[1].toString());
+                            user.setNombres(p[1].toString());
                         }
                         if(p[2]!=null){
-                            usuarioAux.setApellidos(p[2].toString());
+                            user.setApellidos(p[2].toString());
                         }
                         if(p[3]!=null){
-                            usuarioAux.setCedula(p[3].toString());
+                            user.setCedula(p[3].toString());
                         }
                         if(p[4]!=null){
-                            usuarioAux.setTelefono(p[4].toString());
+                            user.setTelefono(p[4].toString());
                         }
                         if(p[5]!=null){
-                            usuarioAux.setUsuario(p[5].toString());
+                            user.setUsuario(p[5].toString());
                         }
                         if(p[6]!=null){
                             rolAux.setRol(p[6].toString()); 
                         }
                         
-                        usuarioAux.setIdRol(rolAux);
+                        user.setIdRol(rolAux);
                         
-                        token=generarToken(usuarioAux.getUsuario(), usuarioAux.getIdRol().getRol());
-                        usuarioAux.setToken(token);
+                        String token=generarToken(user.getUsuario(), user.getIdRol().getRol());
+                        user.setToken(token);
                     }
-                    GenericEntity<Usuario> entidad = new GenericEntity<Usuario>(usuarioAux) {
+                    GenericEntity<User> entidad = new GenericEntity<User>(user) {
                     };
                     //return Response.ok().header(HttpHeaders.AUTHORIZATION, token).entity(entidad).build();
                     return Response.ok().entity(entidad).build();
                 } else {
                     return Response.status(Response.Status.NO_CONTENT).build();
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
         }
