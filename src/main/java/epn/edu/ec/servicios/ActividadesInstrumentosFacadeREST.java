@@ -3,6 +3,7 @@ package epn.edu.ec.servicios;
 import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.ActividadesInstrumentos;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,6 +44,7 @@ public class ActividadesInstrumentosFacadeREST extends AbstractFacade<Actividade
     }
 
     @DELETE
+    @RolesAllowed("ADMINISTRADOR")
     @Path("{id}")
     public void eliminar(@PathParam("id") Integer id) {
         super.eliminar(super.buscarPorId(id));

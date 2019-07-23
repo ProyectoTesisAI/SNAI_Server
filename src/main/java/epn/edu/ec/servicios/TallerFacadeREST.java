@@ -7,6 +7,7 @@ import epn.edu.ec.entidades.Taller;
 import epn.edu.ec.entidades.UDI;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -50,6 +51,7 @@ public class TallerFacadeREST extends AbstractFacade<Taller> {
     }
 
     @DELETE
+    @RolesAllowed("ADMINISTRADOR")
     @Path("{id}")
     public void eliminar(@PathParam("id") Integer id) {
         super.eliminar(super.buscarPorId(id));

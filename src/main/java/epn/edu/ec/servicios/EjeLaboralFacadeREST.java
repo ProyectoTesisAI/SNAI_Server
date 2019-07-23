@@ -3,6 +3,7 @@ package epn.edu.ec.servicios;
 import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.EjeLaboral;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -42,6 +43,7 @@ public class EjeLaboralFacadeREST extends AbstractFacade<EjeLaboral> {
     }
 
     @DELETE
+    @RolesAllowed("ADMINISTRADOR")
     @Path("{id}")
     public void eliminar(@PathParam("id") Integer id) {
         super.eliminar(super.buscarPorId(id));
