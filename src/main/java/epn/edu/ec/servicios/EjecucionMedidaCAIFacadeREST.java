@@ -5,6 +5,7 @@ import epn.edu.ec.entidades.DetalleInfraccionCAI;
 import epn.edu.ec.entidades.EjecucionMedidaCAI;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -47,6 +48,7 @@ public class EjecucionMedidaCAIFacadeREST extends AbstractFacade<EjecucionMedida
     }
 
     @DELETE
+    @RolesAllowed("ADMINISTRADOR")
     @Path("{id}")
     public void eliminar(@PathParam("id") Integer id) {
         super.eliminar(super.buscarPorId(id));

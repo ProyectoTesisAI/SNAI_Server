@@ -15,6 +15,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -65,6 +66,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     }
 
     @DELETE
+    @RolesAllowed("ADMINISTRADOR")
     @Secured
     @Path("{id}")
     public void eliminar(@PathParam("id") Integer id) {
