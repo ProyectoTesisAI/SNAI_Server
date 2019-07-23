@@ -1,7 +1,6 @@
 package epn.edu.ec.entidades;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,7 +20,7 @@ public class IdentificacionGeografica implements Serializable {
     @Id
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_geografica_pk", nullable = false)
-    private AdolescenteInfractor idAdolescenteInfractorUDI;
+    private AdolescenteInfractor idAdolescenteInfractor;
     
     @Size(max = 20)
     @Column(name = "pais_nacimiento")
@@ -62,12 +60,12 @@ public class IdentificacionGeografica implements Serializable {
     public IdentificacionGeografica() {
     }
 
-    public AdolescenteInfractor getIdAdolescenteInfractorUDI() {
-        return idAdolescenteInfractorUDI;
+    public AdolescenteInfractor getIdAdolescenteInfractor() {
+        return idAdolescenteInfractor;
     }
 
-    public void setIdAdolescenteInfractorUDI(AdolescenteInfractor idAdolescenteInfractorUDI) {
-        this.idAdolescenteInfractorUDI = idAdolescenteInfractorUDI;
+    public void setIdAdolescenteInfractor(AdolescenteInfractor idAdolescenteInfractor) {
+        this.idAdolescenteInfractor = idAdolescenteInfractor;
     }
 
     public String getPaisNacimiento() {
