@@ -14,6 +14,7 @@ import javax.ws.rs.ext.Provider;
 
 import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.Rol;
+import epn.edu.ec.entidades.RolCentroUsuario;
 import epn.edu.ec.entidades.Usuario;
 import epn.edu.ec.seguridad.MyApplicationSecurityContext;
 import io.jsonwebtoken.Claims;
@@ -44,10 +45,16 @@ public class RestSecurityFilter implements ContainerRequestFilter {
             //Creamos el usuario a partir de la informaci�n del token
             Usuario usuario = new Usuario();
             usuario.setUsuario(claims.getBody().getSubject());
+            
             String roles = (String) claims.getBody().get("roles");
             Rol rol = new Rol();
             rol.setRol(roles);
-            usuario.setIdRol(rol);
+            
+            
+            RolCentroUsuario rolCentroUsuario= new RolCentroUsuario();
+            rolCentroUsuario.setIdRol(rol);
+            
+            usuario.setIdRolUsuarioCentro(rolCentroUsuario);
             
             // Creamos el SecurityContext
             MyApplicationSecurityContext secContext = new MyApplicationSecurityContext(usuario, requestContext.getSecurityContext().isSecure());

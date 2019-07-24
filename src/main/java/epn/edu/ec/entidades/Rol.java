@@ -62,7 +62,5 @@ public class Rol implements Serializable {
     public void setRol(String rol) {
         this.rol = rol;
     }
-
-    
     
 }

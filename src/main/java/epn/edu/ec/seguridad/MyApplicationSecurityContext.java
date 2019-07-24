@@ -33,10 +33,10 @@ public class MyApplicationSecurityContext implements SecurityContext {
 
 	@Override
 	public boolean isUserInRole(String rol) {
-		if (usuario.getIdRol().getRol()!= null) {
-            return usuario.getIdRol().getRol().contains(rol);
-        }
-        return false;
+            if (usuario.getIdRolUsuarioCentro().getIdRol().getRol()!= null) {
+                return usuario.getIdRolUsuarioCentro().getIdRol().getRol().contains(rol);
+            }
+            return false;
 	}
 
 }
