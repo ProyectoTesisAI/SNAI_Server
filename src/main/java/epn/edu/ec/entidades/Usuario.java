@@ -31,8 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "t_usuario")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
+
 public class Usuario implements Serializable, Principal {
 
     @Id
@@ -68,9 +67,9 @@ public class Usuario implements Serializable, Principal {
     @Column(name = "activo")
     private Boolean activo;
     
-    @JoinColumn(name = "id_rol_fk", referencedColumnName = "id_rol_pk")
+    @JoinColumn(name = "id_rcu_fk", referencedColumnName = "id_rcu_pk")
     @ManyToOne
-    private Rol idRol;
+    private RolCentroUsuario idRolUsuarioCentro;
 
     public Usuario() {
     }
@@ -143,12 +142,12 @@ public class Usuario implements Serializable, Principal {
         this.activo = activo;
     }
 
-    public Rol getIdRol() {
-        return idRol;
+    public RolCentroUsuario getIdRolUsuarioCentro() {
+        return idRolUsuarioCentro;
     }
 
-    public void setIdRol(Rol idRol) {
-        this.idRol = idRol;
+    public void setIdRolUsuarioCentro(RolCentroUsuario idRolUsuarioCentro) {
+        this.idRolUsuarioCentro = idRolUsuarioCentro;
     }
     
     @Override
