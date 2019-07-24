@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package epn.edu.ec.servicios;
 
 import epn.edu.ec.anotacion.Secured;
@@ -29,7 +24,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -99,8 +93,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
             return Response.status(Response.Status.BAD_REQUEST).entity(usuario).build();
         } else {
             try {
-                Query query = em.createNativeQuery("select u.id_usuario_pk,u.nombres,u.apellidos,u.cedula,u.telefono,u.usuario, r.rol from t_usuario as u\n" +
-                                                    "inner join t_rol as r ON r.id_rol_pk = u.id_rol_fk where u.usuario = ? and u.contrasenia = ? and u.activo=true ");
+                Query query = em.createNativeQuery("select u.id_usuario_pk,u.nombres,u.apellidos,u.cedula,u.telefono,u.usuario, r.rol from t_usuario as u inner join t_rol_centro_usuario as rcu on rcu.id_rcu_pk=u.id_rcu_fk inner join t_rol as r on r.id_rol_pk = rcu.id_rol_fk where u.usuario = ? and u.contrasenia = ? and u.activo=true");
                 query.setParameter(1, usuario.getUsuario());
                 query.setParameter(2, usuario.getContraseña());
                 
