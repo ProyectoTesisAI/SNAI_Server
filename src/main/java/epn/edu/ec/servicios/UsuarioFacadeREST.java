@@ -2,6 +2,7 @@ package epn.edu.ec.servicios;
 
 import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.Rol;
+import epn.edu.ec.entidades.RolCentroUsuario;
 import epn.edu.ec.entidades.Usuario;
 import epn.edu.ec.entidades.User;
 import epn.edu.ec.filter.RestSecurityFilter;
@@ -103,6 +104,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
                 
                     User user= new User();
                     Rol rolAux= new Rol();
+                    RolCentroUsuario rcu = new RolCentroUsuario();
                     
                     for (Object[] p : objetos) {
                         
@@ -128,9 +130,10 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
                             rolAux.setRol(p[6].toString()); 
                         }
                         
-                        user.setIdRol(rolAux);
+                        rcu.setIdRol(rolAux);
+                        user.setIdRolUsuarioCentro(rcu);
                         
-                        String token=generarToken(user.getUsuario(), user.getIdRol().getRol());
+                        String token=generarToken(user.getUsuario(), rcu.getIdRol().getRol());
                         user.setToken(token);
                     }
                     GenericEntity<User> entidad = new GenericEntity<User>(user) {

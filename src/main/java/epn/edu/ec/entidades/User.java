@@ -20,7 +20,7 @@ public class User {
     private String contraseña;
     private Boolean activo;
     private String token;
-    private Rol idRol;
+    private RolCentroUsuario idRolUsuarioCentro;
 
     public User() {
     }
@@ -89,14 +89,6 @@ public class User {
         this.activo = activo;
     }
 
-    public Rol getIdRol() {
-        return idRol;
-    }
-
-    public void setIdRol(Rol idRol) {
-        this.idRol = idRol;
-    }
-
     public String getToken() {
         return token;
     }
@@ -104,4 +96,12 @@ public class User {
     public void setToken(String token) {
         this.token = token;
     }
+
+    public RolCentroUsuario getIdRolUsuarioCentro() {
+        return idRolUsuarioCentro;
+    }
+
+    public void setIdRolUsuarioCentro(RolCentroUsuario idRolUsuarioCentro) {
+        this.idRolUsuarioCentro = idRolUsuarioCentro;
+    }    
 }
