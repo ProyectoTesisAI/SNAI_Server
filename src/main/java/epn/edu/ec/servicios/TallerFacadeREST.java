@@ -5,6 +5,7 @@ import epn.edu.ec.entidades.CAI;
 import epn.edu.ec.entidades.ItemTaller;
 import epn.edu.ec.entidades.Taller;
 import epn.edu.ec.entidades.UDI;
+import epn.edu.ec.entidades.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
@@ -72,6 +73,113 @@ public class TallerFacadeREST extends AbstractFacade<Taller> {
         List<Taller> talleres = (List<Taller>) query.getResultList();
 
         return talleres;
+    }
+
+    @POST
+    @Path("TalleresSinInformePorUsuario")//este estapor terminarse
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response listarTalleresSinInformePorUsuario(Usuario usuario) {
+        if (usuario.getIdUsuario() < 0) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(usuario).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select * from t_taller as t where not t.id_taller_pk in (select i.id_taller_fk from t_informe as i) and t.usuario_fk=?1", Taller.class);
+                query.setParameter(1, usuario.getIdUsuario());
+                List<Taller> listado = query.getResultList();
+
+                if (!listado.isEmpty()) {
+                    List<Taller> talleres = new ArrayList<>();
+                    for (Taller t : listado) {
+                        Taller taller = new Taller();
+                        CAI cai = new CAI();
+                        UDI udi = new UDI();
+                        Usuario user = new Usuario();
+
+                        taller.setIdTaller(t.getIdTaller());
+                        taller.setTema(t.getTema());
+                        taller.setNumeroTaller(t.getNumeroTaller());
+                        taller.setFecha(t.getFecha());
+                        taller.setHoraInicio(t.getHoraInicio());
+                        taller.setObjetivo(t.getObjetivo());
+                        taller.setNumeroTotalParticipantes(t.getNumeroTotalParticipantes());
+                        taller.setRecomendaciones(t.getRecomendaciones());
+                        taller.setTipo(t.getTipo());
+
+                        if (t.getIdCai() != null) {
+                            cai.setIdCai(t.getIdCai().getIdCai());
+                            cai.setCai(t.getIdCai().getCai());
+                            taller.setIdCai(cai);
+                        } else if (t.getIdCai() == null) {
+                            cai = new CAI();
+                            taller.setIdCai(cai);
+                        }
+                        if (t.getIdUdi() != null) {
+                            udi.setIdUdi(t.getIdUdi().getIdUdi());
+                            udi.setUdi(t.getIdUdi().getUdi());
+                            taller.setIdUdi(udi);
+                        } else {
+                            udi = null;
+                            taller.setIdUdi(udi);
+                        }
+
+                        user = t.getIdUsuario();
+
+                        talleres.add(t);
+                    }
+                    GenericEntity<List<Taller>> entidad = new GenericEntity<List<Taller>>(talleres) {
+                    };
+
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (Exception e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+    @GET
+    @Path("TalleresSinInformeSoloUZDI")//este estapor terminarse
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response listarTalleresSinInformeSoloUZDI() {
+        try {
+            Query query = em.createNativeQuery("select * from t_taller as t where not t.id_taller_pk in (select i.id_taller_fk from t_informe as i) and t.id_udi_fk is not null and t.id_cai_fk is null", Taller.class);
+            List<Taller> listado = query.getResultList();
+
+            if (!listado.isEmpty()) {
+                GenericEntity<List<Taller>> entidad = new GenericEntity<List<Taller>>(listado) {
+                };
+
+                return Response.ok().entity(entidad).build();
+            } else {
+                return Response.status(Response.Status.NO_CONTENT).build();
+            }
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GET
+    @Path("TalleresSinInformeSoloCAI")//este estapor terminarse
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response listarTalleresSinInformeSoloCAI() {
+        try {
+            Query query = em.createNativeQuery("select * from t_taller as t where not t.id_taller_pk in (select i.id_taller_fk from t_informe as i) and t.id_cai_fk is not null and t.id_udi_fk is null", Taller.class);
+            List<Taller> listado = query.getResultList();
+
+            if (!listado.isEmpty()) {
+                GenericEntity<List<Taller>> entidad = new GenericEntity<List<Taller>>(listado) {
+                };
+
+                return Response.ok().entity(entidad).build();
+            } else {
+                return Response.status(Response.Status.NO_CONTENT).build();
+            }
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GET
