@@ -1,6 +1,5 @@
 package epn.edu.ec.servicios;
 
-import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.AdolescenteInfractorCAI;
 import epn.edu.ec.entidades.DetalleInfraccionCAI;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Stateless
-@Secured
+//@Secured
 @Path("Detalle_Infraccion_Cai")
 public class DetalleInfraccionCAIFacadeREST extends AbstractFacade<DetalleInfraccionCAI> {
 
@@ -111,7 +110,7 @@ public class DetalleInfraccionCAIFacadeREST extends AbstractFacade<DetalleInfrac
             }
         }
     }
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

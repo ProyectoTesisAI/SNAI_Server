@@ -35,7 +35,7 @@ public class InformacionInfraccionFacadeREST extends AbstractFacade<InformacionI
     public InformacionInfraccion crear(InformacionInfraccion entidad) {
         return super.crear(entidad);
     }
-    
+
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public InformacionInfraccion guardarInformacionInfraccion(InformacionInfraccion entidad) {
@@ -63,10 +63,10 @@ public class InformacionInfraccionFacadeREST extends AbstractFacade<InformacionI
         return super.listarTodo();
     }
 
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
