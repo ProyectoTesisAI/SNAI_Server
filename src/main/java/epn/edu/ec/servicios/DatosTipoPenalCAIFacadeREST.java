@@ -18,7 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
-@Secured
+//@Secured
 @Path("Datos_Tipo_Penal_Cai")
 public class DatosTipoPenalCAIFacadeREST extends AbstractFacade<DatosTipoPenalCAI> {
 
