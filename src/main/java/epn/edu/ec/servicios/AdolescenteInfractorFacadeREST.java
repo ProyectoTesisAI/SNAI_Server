@@ -33,7 +33,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Stateless
-//@Secured
+@Secured
 @Path("Adolescente_Infractor")
 public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteInfractor> {
 
@@ -854,7 +854,7 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                         + "inner join t_deta_infraccion_cai as di ON di.id_adolescente_cai_fk = aic.id_adolescente_cai_pk\n"
                         + "inner join t_ejecucion_medida_cai as emc ON emc.id_deta_infrac_cai_fk = di.id_deta_infrac_cai_pk\n"
                         + "inner join t_cai as cai ON cai.id_cai_pk = emc.id_cai_fk\n"
-                        + "where ee.estudia=false and ee.nivel_edu_actual=?1");
+                        + "where ee.estudia=false");
                 query.setParameter(1, nivelEducacion);
 
                 List<Object[]> objetos = (List<Object[]>) query.getResultList();
@@ -912,7 +912,7 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                         + "inner join t_adolescente_udi as aiu ON aiu.id_adolescente_udi_pk = ai.id_adolescente_pk\n"
                         + "inner join t_unidad_zonal as uz ON uz.id_unidad_zonal_pk = aiu.id_adolescente_udi_pk\n"
                         + "inner join t_udi as u ON u.id_udi_pk = uz.id_udi_fk\n"
-                        + "where ee.estudia=false and ee.nivel_edu_actual=?1");
+                        + "where ee.estudia=false");
                 query.setParameter(1, nivelEducacion);
 
                 List<Object[]> objetos = (List<Object[]>) query.getResultList();
@@ -993,10 +993,13 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                             aux.setApellidos(p[3].toString());
                         }
                         if (p[4] != null) {
-                            aux.setEstudia(Boolean.parseBoolean(p[4].toString()));
+                            aux.setEdad(Integer.parseInt(p[4].toString()));
                         }
                         if (p[5] != null) {
-                            aux.setRazonNoEstudia(p[5].toString());
+                            aux.setEstudia(Boolean.parseBoolean(p[5].toString()));
+                        }
+                        if (p[6] != null) {
+                            aux.setRazonNoEstudia(p[6].toString());
                         }
 
                         lista.add(aux);
@@ -1052,10 +1055,13 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                             aux.setApellidos(p[3].toString());
                         }
                         if (p[4] != null) {
-                            aux.setEstudia(Boolean.parseBoolean(p[4].toString()));
+                            aux.setEdad(Integer.parseInt(p[4].toString()));
                         }
                         if (p[5] != null) {
-                            aux.setRazonNoEstudia(p[5].toString());
+                            aux.setEstudia(Boolean.parseBoolean(p[5].toString()));
+                        }
+                        if (p[6] != null) {
+                            aux.setRazonNoEstudia(p[6].toString());
                         }
 
                         lista.add(aux);
@@ -1111,10 +1117,13 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                             aux.setApellidos(p[3].toString());
                         }
                         if (p[4] != null) {
-                            aux.setEstudia(Boolean.parseBoolean(p[4].toString()));
+                            aux.setEdad(Integer.parseInt(p[4].toString()));
                         }
                         if (p[5] != null) {
-                            aux.setNivelEducativo(p[5].toString());
+                            aux.setEstudia(Boolean.parseBoolean(p[5].toString()));
+                        }
+                        if (p[6] != null) {
+                            aux.setNivelEducativo(p[6].toString());
                         }
 
                         lista.add(aux);
@@ -1169,10 +1178,13 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                             aux.setApellidos(p[3].toString());
                         }
                         if (p[4] != null) {
-                            aux.setEstudia(Boolean.parseBoolean(p[4].toString()));
+                            aux.setEdad(Integer.parseInt(p[4].toString()));
                         }
                         if (p[5] != null) {
-                            aux.setNivelEducativo(p[5].toString());
+                            aux.setEstudia(Boolean.parseBoolean(p[5].toString()));
+                        }
+                        if (p[6] != null) {
+                            aux.setNivelEducativo(p[6].toString());
                         }
 
                         lista.add(aux);
@@ -1194,7 +1206,7 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
     @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
     public Response reporteLugarResidenciaUDI() {
         try {
-            Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, u.udi, ai.nombres, ai.apellidos, ii.tipo_infraccion,(ig.provincia_residencia ||', '|| ig.canton_residencia ||', '|| ig.direccion_domicilio) from t_info_infraccion as ii\n"
+            Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, u.udi, ai.nombres, ai.apellidos, ii.tipo_infraccion,ig.provincia_residencia, ig.canton_residencia, ig.direccion_domicilio from t_info_infraccion as ii\n"
                     + "inner join t_adolescente_udi as audi on audi.id_adolescente_udi_pk = ii.id_info_infrac_pk\n"
                     + "inner join t_adolescente as ai ON ai.id_adolescente_pk = audi.id_adolescente_udi_pk\n"
                     + "inner join t_unidad_zonal as uz on uz.id_unidad_zonal_pk = audi.id_adolescente_udi_pk\n"
@@ -1224,9 +1236,14 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                         aux.setTipoDelto(p[4].toString());
                     }
                     if (p[5] != null) {
-                        aux.setLugarResidencia(p[5].toString());
+                        aux.setProvinciaResidencia(p[5].toString());
                     }
-
+                    if (p[6] != null) {
+                       aux.setCantonResidencia(p[6].toString());
+                    }
+                    if (p[7] != null) {
+                        aux.setDireccionResidencia(p[7].toString());
+                    }
                     lista.add(aux);
                 }
                 GenericEntity<List<Reporte7>> entidad = new GenericEntity<List<Reporte7>>(lista) {
@@ -1245,7 +1262,7 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
     @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
     public Response reporteLugarResidenciaCAI() {
         try {
-            Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, ca.cai, ai.nombres, ai.apellidos, dicai.tipo_penal,(ig.provincia_residencia ||', '|| ig.canton_residencia ||', '|| ig.direccion_domicilio) from t_deta_infraccion_cai as dicai\n"
+            Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, ca.cai, ai.nombres, ai.apellidos, dicai.tipo_penal,ig.provincia_residencia, ig.canton_residencia, ig.direccion_domicilio from t_deta_infraccion_cai as dicai\n"
                     + "inner join t_adolescente_cai as acai on acai.id_adolescente_cai_pk = dicai.id_adolescente_cai_fk\n"
                     + "inner join t_adolescente as ai on ai.id_adolescente_pk = acai.id_adolescente_cai_pk\n"
                     + "inner join t_ejecucion_medida_cai as emc ON emc.id_deta_infrac_cai_fk = dicai.id_deta_infrac_cai_pk\n"
@@ -1275,9 +1292,14 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                         aux.setTipoDelto(p[4].toString());
                     }
                     if (p[5] != null) {
-                        aux.setLugarResidencia(p[5].toString());
+                        aux.setProvinciaResidencia(p[5].toString());
                     }
-
+                    if (p[6] != null) {
+                       aux.setCantonResidencia(p[6].toString());
+                    }
+                    if (p[7] != null) {
+                        aux.setDireccionResidencia(p[7].toString());
+                    }
                     lista.add(aux);
                 }
                 GenericEntity<List<Reporte7>> entidad = new GenericEntity<List<Reporte7>>(lista) {
