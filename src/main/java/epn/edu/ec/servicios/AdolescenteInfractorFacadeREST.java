@@ -659,7 +659,7 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
             return Response.status(Response.Status.BAD_REQUEST).entity(fechaIngreso).build();
         } else {
             try {
-                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, ca.cai, ai.nombres, ai.apellidos, emc.fecha_aprhension, emc.tiempo_senten_dias,cast(emc.fecha_aprhension+make_interval(days=>cast(emc.tiempo_senten_dias*0.6 as integer))::interval as date) as \"Fecha de cumplimiento 60%\",cast(emc.fecha_aprhension+make_interval(days=>cast(emc.tiempo_senten_dias*0.8 as integer))::interval as date) as \"Fecha de cumplimiento 80%\",cast((extract(day from now()-emc.fecha_aprhension))/emc.tiempo_senten_dias as DOUBLE PRECISION)*100 as Porcentaje\n"
+                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, ca.cai, ai.nombres, ai.apellidos, emc.fecha_aprhension, emc.tiempo_senten_dias,cast(emc.fecha_aprhension+make_interval(days=>cast(emc.tiempo_senten_dias*0.6 as integer))::interval as date) as \"Fecha de cumplimiento 60%\",cast(emc.fecha_aprhension+make_interval(days=>cast(emc.tiempo_senten_dias*0.8 as integer))::interval as date) as \"Fecha de cumplimiento 80%\",cast((extract(day from now()-emc.fecha_aprhension))/emc.tiempo_senten_dias as DOUBLE PRECISION) as Porcentaje\n"
                         + "from t_deta_infraccion_cai as dicai\n"
                         + "inner join t_adolescente_cai as acai on acai.id_adolescente_cai_pk = dicai.id_adolescente_cai_fk\n"
                         + "inner join t_adolescente as ai on ai.id_adolescente_pk = acai.id_adolescente_cai_pk\n"
