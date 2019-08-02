@@ -1,7 +1,6 @@
 package epn.edu.ec.servicios;
 
 import epn.edu.ec.anotacion.Secured;
-import epn.edu.ec.entidades.Rol;
 import epn.edu.ec.entidades.RolCentroUsuario;
 import epn.edu.ec.entidades.Usuario;
 import epn.edu.ec.entidades.User;
@@ -105,7 +104,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @GET
     @Secured
     @Path("UsuariosDesactivados")
@@ -138,48 +137,32 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
             return Response.status(Response.Status.BAD_REQUEST).entity(usuario).build();
         } else {
             try {
-                Query query = em.createNativeQuery("select u.id_usuario_pk,u.nombres,u.apellidos,u.cedula,u.telefono,u.usuario, r.rol from t_usuario as u inner join t_rol_centro_usuario as rcu on rcu.id_rcu_pk=u.id_rcu_fk inner join t_rol as r on r.id_rol_pk = rcu.id_rol_fk where u.usuario = ? and u.contrasenia = ? and u.activo=true");
+                Query query = em.createNativeQuery("select * from t_usuario as u inner join t_rol_centro_usuario as rcu on rcu.id_rcu_pk=u.id_rcu_fk inner join t_rol as r on r.id_rol_pk = rcu.id_rol_fk where u.usuario = ? and u.contrasenia = ? and u.activo=true", Usuario.class);
                 query.setParameter(1, usuario.getUsuario());
                 query.setParameter(2, usuario.getContraseña());
 
-                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+                List<Usuario> objetos = (List<Usuario>) query.getResultList();
 
-                if (objetos != null && objetos.size() > 0) {
-
+                if (!objetos.isEmpty()) {
+                    Usuario usuarioAux = new Usuario();
+                    usuarioAux=objetos.get(0);
+                    
                     User user = new User();
-                    Rol rolAux = new Rol();
                     RolCentroUsuario rcu = new RolCentroUsuario();
 
-                    for (Object[] p : objetos) {
+                    user.setIdUsuario(usuarioAux.getIdUsuario());
+                    user.setApellidos(usuarioAux.getApellidos());
+                    user.setCedula(usuarioAux.getCedula());
+                    user.setNombres(usuarioAux.getNombres());
+                    user.setTelefono(usuarioAux.getTelefono());
+                    user.setUsuario(usuarioAux.getUsuario());
+                    
+                    rcu = usuarioAux.getIdRolUsuarioCentro();
+                    user.setIdRolUsuarioCentro(rcu);
 
-                        if (p[0] != null) {
-                            user.setIdUsuario(Integer.parseInt(p[0].toString()));
-                        }
-                        if (p[1] != null) {
-                            user.setNombres(p[1].toString());
-                        }
-                        if (p[2] != null) {
-                            user.setApellidos(p[2].toString());
-                        }
-                        if (p[3] != null) {
-                            user.setCedula(p[3].toString());
-                        }
-                        if (p[4] != null) {
-                            user.setTelefono(p[4].toString());
-                        }
-                        if (p[5] != null) {
-                            user.setUsuario(p[5].toString());
-                        }
-                        if (p[6] != null) {
-                            rolAux.setRol(p[6].toString());
-                        }
+                    String token = generarToken(user.getUsuario(), rcu.getIdRol().getRol());
+                    user.setToken(token);
 
-                        rcu.setIdRol(rolAux);
-                        user.setIdRolUsuarioCentro(rcu);
-
-                        String token = generarToken(user.getUsuario(), rcu.getIdRol().getRol());
-                        user.setToken(token);
-                    }
                     GenericEntity<User> entidad = new GenericEntity<User>(user) {
                     };
                     //return Response.ok().header(HttpHeaders.AUTHORIZATION, token).entity(entidad).build();
