@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.RolCentroUsuario;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
@@ -21,7 +22,7 @@ import javax.ws.rs.core.Response;
 
 @Stateless
 @Path("RolCentroUsuario")
-//@Secured
+@Secured
 public class RolCentroUsuarioFacadeREST extends AbstractFacade<RolCentroUsuario> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
