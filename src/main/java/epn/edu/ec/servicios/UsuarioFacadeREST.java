@@ -51,7 +51,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         super.crear(entidad);
         return entidad;
     }
-    
+
     @PUT
     @Secured
     @Consumes({MediaType.APPLICATION_JSON})
@@ -84,6 +84,50 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return super.listarTodo();
     }
 
+    @GET
+    @Secured
+    @Path("UsuariosActivos")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response listarUsuariosActivos() {
+        try {
+            Query query = em.createNativeQuery("SELECT * FROM t_usuario as u where u.activo=true", Usuario.class);
+
+            List<Usuario> listado = (List<Usuario>) query.getResultList();
+
+            if (!listado.isEmpty()) {
+                GenericEntity<List<Usuario>> entidad = new GenericEntity<List<Usuario>>(listado) {
+                };
+                return Response.ok().entity(entidad).build();
+            } else {
+                return Response.status(Response.Status.NO_CONTENT).build();
+            }
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Secured
+    @Path("UsuariosDesactivados")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response listarUsuariosDesactivados() {
+        try {
+            Query query = em.createNativeQuery("SELECT * FROM t_usuario as u where u.activo=false", Usuario.class);
+
+            List<Usuario> listado = (List<Usuario>) query.getResultList();
+
+            if (!listado.isEmpty()) {
+                GenericEntity<List<Usuario>> entidad = new GenericEntity<List<Usuario>>(listado) {
+                };
+                return Response.ok().entity(entidad).build();
+            } else {
+                return Response.status(Response.Status.NO_CONTENT).build();
+            }
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @POST
     @Path("login")
     @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
@@ -97,43 +141,43 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
                 Query query = em.createNativeQuery("select u.id_usuario_pk,u.nombres,u.apellidos,u.cedula,u.telefono,u.usuario, r.rol from t_usuario as u inner join t_rol_centro_usuario as rcu on rcu.id_rcu_pk=u.id_rcu_fk inner join t_rol as r on r.id_rol_pk = rcu.id_rol_fk where u.usuario = ? and u.contrasenia = ? and u.activo=true");
                 query.setParameter(1, usuario.getUsuario());
                 query.setParameter(2, usuario.getContraseña());
-                
-                List<Object[]> objetos = (List<Object[]>) query.getResultList(); 
-                
+
+                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
                 if (objetos != null && objetos.size() > 0) {
-                
-                    User user= new User();
-                    Rol rolAux= new Rol();
+
+                    User user = new User();
+                    Rol rolAux = new Rol();
                     RolCentroUsuario rcu = new RolCentroUsuario();
-                    
+
                     for (Object[] p : objetos) {
-                        
-                        if(p[0]!=null){
+
+                        if (p[0] != null) {
                             user.setIdUsuario(Integer.parseInt(p[0].toString()));
                         }
-                        if(p[1]!=null){
+                        if (p[1] != null) {
                             user.setNombres(p[1].toString());
                         }
-                        if(p[2]!=null){
+                        if (p[2] != null) {
                             user.setApellidos(p[2].toString());
                         }
-                        if(p[3]!=null){
+                        if (p[3] != null) {
                             user.setCedula(p[3].toString());
                         }
-                        if(p[4]!=null){
+                        if (p[4] != null) {
                             user.setTelefono(p[4].toString());
                         }
-                        if(p[5]!=null){
+                        if (p[5] != null) {
                             user.setUsuario(p[5].toString());
                         }
-                        if(p[6]!=null){
-                            rolAux.setRol(p[6].toString()); 
+                        if (p[6] != null) {
+                            rolAux.setRol(p[6].toString());
                         }
-                        
+
                         rcu.setIdRol(rolAux);
                         user.setIdRolUsuarioCentro(rcu);
-                        
-                        String token=generarToken(user.getUsuario(), rcu.getIdRol().getRol());
+
+                        String token = generarToken(user.getUsuario(), rcu.getIdRol().getRol());
                         user.setToken(token);
                     }
                     GenericEntity<User> entidad = new GenericEntity<User>(user) {
@@ -148,18 +192,18 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
             }
         }
     }
-    
+
     private String generarToken(String usuario, String rol) {
-    	//Calculamos la fecha de expiración del token
-    	Date issueDate = new Date();
-    	Calendar calendar = Calendar.getInstance();
-    	calendar.setTime(issueDate);
-    	calendar.add(Calendar.MINUTE, 60);
+        //Calculamos la fecha de expiración del token
+        Date issueDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(issueDate);
+        calendar.add(Calendar.MINUTE, 60);
         Date expireDate = calendar.getTime();
-        
-		//Creamos el token
+
+        //Creamos el token
         String jwtToken = Jwts.builder()
-        		.claim("roles", rol)
+                .claim("roles", rol)
                 .setSubject(usuario)
                 .setIssuer("http://localhost:40040/Sistema_SNAI_Servidor/webresources/Usuario/login")
                 .setIssuedAt(issueDate)
@@ -168,10 +212,10 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
                 .compact();
         return jwtToken;
     }
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
