@@ -35,6 +35,12 @@ public class AdolescenteInfractorUDIFacadeREST extends AbstractFacade<Adolescent
     public AdolescenteInfractorUDI crear(AdolescenteInfractorUDI entidad) {
         return super.crear(entidad);
     }
+    
+    @PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    public AdolescenteInfractorUDI guardarEdicion(AdolescenteInfractorUDI entidad) {
+        return super.editar(entidad);
+    }
 
     @DELETE
     @RolesAllowed("ADMINISTRADOR")
