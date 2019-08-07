@@ -36,6 +36,12 @@ public class AdolescenteInfractorCAIFacadeREST extends AbstractFacade<Adolescent
         return super.crear(entidad);
     }
 
+    @PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    public AdolescenteInfractorCAI guardarEdicion(AdolescenteInfractorCAI entidad) {
+        return super.editar(entidad);
+    }
+    
     @DELETE
     @RolesAllowed("ADMINISTRADOR")
     @Path("{id}")

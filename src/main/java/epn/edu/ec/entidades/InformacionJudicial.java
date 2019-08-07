@@ -32,7 +32,7 @@ public class InformacionJudicial implements Serializable {
     @Column(name = "nombre_fiscal")
     private String nombreFiscal;
     
-    @Size(max = 20)
+    @Size(max = 25)
     @Column(name = "unidad_judicial")
     private String unidadJudicial;
     
