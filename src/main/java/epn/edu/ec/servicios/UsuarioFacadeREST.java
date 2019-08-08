@@ -10,13 +10,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -57,14 +55,6 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     public Usuario guardarUsuario(Usuario entidad) {
         super.editar(entidad);
         return entidad;
-    }
-
-    @DELETE
-    @RolesAllowed("ADMINISTRADOR")
-    @Secured
-    @Path("{id}")
-    public void eliminar(@PathParam("id") Integer id) {
-        super.eliminar(super.buscarPorId(id));
     }
 
     @GET

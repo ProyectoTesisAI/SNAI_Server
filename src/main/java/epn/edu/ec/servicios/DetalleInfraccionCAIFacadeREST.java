@@ -1,16 +1,15 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.AdolescenteInfractorCAI;
 import epn.edu.ec.entidades.DetalleInfraccionCAI;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -22,7 +21,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Stateless
-//@Secured
+@Secured
 @Path("Detalle_Infraccion_Cai")
 public class DetalleInfraccionCAIFacadeREST extends AbstractFacade<DetalleInfraccionCAI> {
 
@@ -44,13 +43,6 @@ public class DetalleInfraccionCAIFacadeREST extends AbstractFacade<DetalleInfrac
     @Consumes({MediaType.APPLICATION_JSON})
     public DetalleInfraccionCAI guardarDetalleInfraccionCAI(DetalleInfraccionCAI entidad) {
         return super.editar(entidad);
-    }
-
-    @DELETE
-    @RolesAllowed("ADMINISTRADOR")
-    @Path("{id}")
-    public void eliminar(@PathParam("id") Integer id) {
-        super.eliminar(super.buscarPorId(id));
     }
 
     @GET

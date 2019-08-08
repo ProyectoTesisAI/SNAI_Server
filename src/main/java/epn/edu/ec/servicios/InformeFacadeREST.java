@@ -4,7 +4,6 @@ import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.Informe;
 import epn.edu.ec.entidades.Usuario;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,13 +16,15 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 @Stateless
 @Path("Informe")
-//@Secured
+@Secured
 public class InformeFacadeREST extends AbstractFacade<Informe> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -39,7 +40,7 @@ public class InformeFacadeREST extends AbstractFacade<Informe> {
     public Informe crear(Informe entidad) {
         return super.crear(entidad);
     }
-    
+
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public Informe guardarInforme(Informe entidad) {
@@ -47,10 +48,11 @@ public class InformeFacadeREST extends AbstractFacade<Informe> {
     }
 
     @DELETE
-    @RolesAllowed("ADMINISTRADOR")
     @Path("{id}")
-    public void eliminar(@PathParam("id") Integer id) {
-        super.eliminar(super.buscarPorId(id));
+    public void eliminar(@Context SecurityContext securityContext, @PathParam("id") Integer id) {
+        if (securityContext.isUserInRole("ADMINISTRADOR")) {
+            super.eliminar(super.buscarPorId(id));
+        }
     }
 
     @GET
@@ -66,7 +68,7 @@ public class InformeFacadeREST extends AbstractFacade<Informe> {
     public List<Informe> listarTodo() {
         return super.listarTodo();
     }
-    
+
     @POST
     @Path("InformesPorUsuario")
     @Produces({MediaType.APPLICATION_JSON})
@@ -93,7 +95,7 @@ public class InformeFacadeREST extends AbstractFacade<Informe> {
             }
         }
     }
-    
+
     @GET
     @Path("InformeSoloUZDI")//solo para COORDINADOR/LIDER UZDI
     @Produces({MediaType.APPLICATION_JSON})
@@ -135,10 +137,10 @@ public class InformeFacadeREST extends AbstractFacade<Informe> {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

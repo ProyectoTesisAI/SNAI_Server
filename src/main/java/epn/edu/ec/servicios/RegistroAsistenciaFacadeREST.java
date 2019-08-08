@@ -9,13 +9,11 @@ import epn.edu.ec.entidades.Taller;
 import epn.edu.ec.entidades.UDI;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -49,13 +47,6 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
     @Consumes({MediaType.APPLICATION_JSON})
     public RegistroAsistencia guardarRegistroAsistencia(RegistroAsistencia entidad) {
         return super.editar(entidad);
-    }
-
-    @DELETE
-    @RolesAllowed("ADMINISTRADOR")
-    @Path("{id}")
-    public void eliminar(@PathParam("id") Integer id) {
-        super.eliminar(super.buscarPorId(id));
     }
 
     @GET
