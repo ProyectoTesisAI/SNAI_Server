@@ -16,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,9 +28,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 @Stateless
 @Secured
@@ -51,7 +52,7 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
     public AdolescenteInfractor crear(AdolescenteInfractor entidad) {
         return super.crear(entidad);
     }
-    
+
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public AdolescenteInfractor guardarEdicion(AdolescenteInfractor entidad) {
@@ -59,10 +60,11 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
     }
 
     @DELETE
-    @RolesAllowed("ADMINISTRADOR")
     @Path("{id}")
-    public void eliminar(@PathParam("id") Integer id) {
-        super.eliminar(super.buscarPorId(id));
+    public void eliminar(@Context SecurityContext securityContext, @PathParam("id") Integer id) {
+        if (securityContext.isUserInRole("ADMINISTRADOR")) {
+            super.eliminar(super.buscarPorId(id));
+        }
     }
 
     @GET
@@ -1246,7 +1248,7 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                         aux.setProvinciaResidencia(p[5].toString());
                     }
                     if (p[6] != null) {
-                       aux.setCantonResidencia(p[6].toString());
+                        aux.setCantonResidencia(p[6].toString());
                     }
                     if (p[7] != null) {
                         aux.setDireccionResidencia(p[7].toString());
@@ -1302,7 +1304,7 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                         aux.setProvinciaResidencia(p[5].toString());
                     }
                     if (p[6] != null) {
-                       aux.setCantonResidencia(p[6].toString());
+                        aux.setCantonResidencia(p[6].toString());
                     }
                     if (p[7] != null) {
                         aux.setDireccionResidencia(p[7].toString());

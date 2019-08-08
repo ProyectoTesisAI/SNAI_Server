@@ -41,13 +41,6 @@ public class UnidadZonalFacadeREST extends AbstractFacade<UnidadZonal> {
     public UnidadZonal guardarUnidadZonal(UnidadZonal entidad) {
         return super.editar(entidad);
     }
-    
-    @DELETE
-    @RolesAllowed("ADMINISTRADOR")
-    @Path("{id}")
-    public void eliminar(@PathParam("id") Integer id) {
-        super.eliminar(super.buscarPorId(id));
-    }
 
     @GET
     @Path("{id}")

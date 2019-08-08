@@ -3,21 +3,13 @@ package epn.edu.ec.servicios;
 import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.Informe;
 import epn.edu.ec.entidades.RegistroFotografico;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -42,13 +34,6 @@ public class RegistroFotograficoFacadeREST extends AbstractFacade<RegistroFotogr
     @Consumes({MediaType.APPLICATION_JSON})
     public RegistroFotografico guardarRegistroFotografico(RegistroFotografico entidad) {
         return super.editar(entidad);
-    }
-
-    @DELETE
-    @RolesAllowed("ADMINISTRADOR")
-    @Path("{id}")
-    public void eliminar(@PathParam("id") Integer id) {
-        super.eliminar(super.buscarPorId(id));
     }
 
     @GET

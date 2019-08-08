@@ -3,12 +3,10 @@ package epn.edu.ec.servicios;
 import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.InformacionInfraccion;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -40,13 +38,6 @@ public class InformacionInfraccionFacadeREST extends AbstractFacade<InformacionI
     @Consumes({MediaType.APPLICATION_JSON})
     public InformacionInfraccion guardarInformacionInfraccion(InformacionInfraccion entidad) {
         return super.editar(entidad);
-    }
-
-    @DELETE
-    @RolesAllowed("ADMINISTRADOR")
-    @Path("{id}")
-    public void eliminar(@PathParam("id") Integer id) {
-        super.eliminar(super.buscarPorId(id));
     }
 
     @GET

@@ -3,12 +3,10 @@ package epn.edu.ec.servicios;
 import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.AdolescenteInfractorUDI;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -35,18 +33,11 @@ public class AdolescenteInfractorUDIFacadeREST extends AbstractFacade<Adolescent
     public AdolescenteInfractorUDI crear(AdolescenteInfractorUDI entidad) {
         return super.crear(entidad);
     }
-    
+
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public AdolescenteInfractorUDI guardarEdicion(AdolescenteInfractorUDI entidad) {
         return super.editar(entidad);
-    }
-
-    @DELETE
-    @RolesAllowed("ADMINISTRADOR")
-    @Path("{id}")
-    public void eliminar(@PathParam("id") Integer id) {
-        super.eliminar(super.buscarPorId(id));
     }
 
     @GET
@@ -67,5 +58,5 @@ public class AdolescenteInfractorUDIFacadeREST extends AbstractFacade<Adolescent
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

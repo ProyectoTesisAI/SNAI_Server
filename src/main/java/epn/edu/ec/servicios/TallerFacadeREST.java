@@ -8,7 +8,6 @@ import epn.edu.ec.entidades.UDI;
 import epn.edu.ec.entidades.Usuario;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,9 +20,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 @Stateless
 @Path("Taller")
@@ -52,10 +53,11 @@ public class TallerFacadeREST extends AbstractFacade<Taller> {
     }
 
     @DELETE
-    @RolesAllowed("ADMINISTRADOR")
     @Path("{id}")
-    public void eliminar(@PathParam("id") Integer id) {
-        super.eliminar(super.buscarPorId(id));
+    public void eliminar(@Context SecurityContext securityContext, @PathParam("id") Integer id) {
+        if (securityContext.isUserInRole("ADMINISTRADOR")) {
+            super.eliminar(super.buscarPorId(id));
+        }
     }
 
     @GET
