@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -49,6 +50,12 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
         return super.editar(entidad);
     }
 
+    @DELETE
+    @Path("{id}")
+    public void eliminar(@PathParam("id") Integer id) {
+        super.eliminar(super.buscarPorId(id));
+    }
+    
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -73,7 +80,7 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
             return Response.status(Response.Status.BAD_REQUEST).entity(udi).build();
         } else {
             try {
-                Query query = em.createNativeQuery("SELECT a.id_adolescente_pk as id_Adolescente, a.nombres, a.apellidos, a.cedula FROM t_adolescente as a INNER JOIN t_adolescente_udi as au ON au.id_adolescente_udi_pk = a.id_adolescente_pk INNER JOIN t_unidad_zonal as uz ON uz.id_unidad_zonal_pk = au.id_adolescente_udi_pk INNER JOIN t_udi as u ON u.id_udi_pk = uz.id_udi_fk WHERE u.udi= ?1");
+                Query query = em.createNativeQuery("SELECT a.id_adolescente_pk as id_Adolescente, a.nombres, a.apellidos, a.cedula,a.documento FROM t_adolescente as a INNER JOIN t_adolescente_udi as au ON au.id_adolescente_udi_pk = a.id_adolescente_pk INNER JOIN t_unidad_zonal as uz ON uz.id_unidad_zonal_pk = au.id_adolescente_udi_pk INNER JOIN t_udi as u ON u.id_udi_pk = uz.id_udi_fk WHERE u.udi= ?1");
                 query.setParameter(1, udi.getUdi());
 
                 List<Object[]> lista = (List<Object[]>) query.getResultList();
@@ -84,10 +91,22 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
                     for (Object[] a : lista) {
 
                         AdolescenteInfractor adolescente = new AdolescenteInfractor();
-                        adolescente.setIdAdolescenteInfractor(Integer.parseInt(a[0].toString()));
-                        adolescente.setNombres(a[1].toString());
-                        adolescente.setApellidos(a[2].toString());
-                        adolescente.setCedula(a[3].toString());
+                        
+                        if(a[0]!=null){
+                            adolescente.setIdAdolescenteInfractor(Integer.parseInt(a[0].toString()));
+                        }
+                        if(a[1]!=null){
+                            adolescente.setNombres(a[1].toString());
+                        }
+                        if(a[2]!=null){
+                            adolescente.setApellidos(a[2].toString());
+                        }
+                        if(a[3]!=null){
+                            adolescente.setCedula(a[3].toString());
+                        }
+                        if(a[4]!=null){
+                            adolescente.setDocumento(a[4].toString());
+                        }
 
                         registroAsistencia.add(adolescente);
                     }
@@ -114,7 +133,7 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
             return Response.status(Response.Status.BAD_REQUEST).entity(cai).build();
         } else {
             try {
-                Query query = em.createNativeQuery("SELECT a.id_adolescente_pk as id_Adolescente, a.nombres, a.apellidos, a.cedula FROM t_adolescente as a INNER JOIN t_adolescente_cai as ac ON ac.id_adolescente_cai_pk= a.id_adolescente_pk INNER JOIN t_deta_infraccion_cai as di ON di.id_adolescente_cai_fk = ac.id_adolescente_cai_pk INNER JOIN t_ejecucion_medida_cai as emc ON emc.id_ejecucion_medida_cai_pk = di.id_deta_infrac_cai_pk INNER JOIN t_cai as c ON c.id_cai_pk = emc.id_cai_fk WHERE c.cai = ?1");
+                Query query = em.createNativeQuery("SELECT a.id_adolescente_pk as id_Adolescente, a.nombres, a.apellidos, a.cedula,a.documento FROM t_adolescente as a INNER JOIN t_adolescente_cai as ac ON ac.id_adolescente_cai_pk= a.id_adolescente_pk INNER JOIN t_deta_infraccion_cai as di ON di.id_adolescente_cai_fk = ac.id_adolescente_cai_pk INNER JOIN t_ejecucion_medida_cai as emc ON emc.id_ejecucion_medida_cai_pk = di.id_deta_infrac_cai_pk INNER JOIN t_cai as c ON c.id_cai_pk = emc.id_cai_fk WHERE c.cai = ?1");
                 query.setParameter(1, cai.getCai());
 
                 List<Object[]> lista = (List<Object[]>) query.getResultList();
@@ -125,11 +144,22 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
                     for (Object[] a : lista) {
 
                         AdolescenteInfractor adolescente = new AdolescenteInfractor();
-                        adolescente.setIdAdolescenteInfractor(Integer.parseInt(a[0].toString()));
-                        adolescente.setNombres(a[1].toString());
-                        adolescente.setApellidos(a[2].toString());
-                        adolescente.setCedula(a[3].toString());
-
+                        
+                        if(a[0]!=null){
+                            adolescente.setIdAdolescenteInfractor(Integer.parseInt(a[0].toString()));
+                        }
+                        if(a[1]!=null){
+                            adolescente.setNombres(a[1].toString());
+                        }
+                        if(a[2]!=null){
+                            adolescente.setApellidos(a[2].toString());
+                        }
+                        if(a[3]!=null){
+                            adolescente.setCedula(a[3].toString());
+                        }
+                        if(a[4]!=null){
+                            adolescente.setDocumento(a[4].toString());
+                        }
                         registroAsistencia.add(adolescente);
                     }
 
@@ -156,7 +186,7 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
         } else {
             try {
                           
-                Query query = em.createNativeQuery("SELECT aa.id_asistencia_adolescente_pk, a.id_adolescente_pk as id_Adolescente, a.nombres, a.apellidos, a.cedula, aa.asistio, aa.id_reg_asistencia_fk FROM t_asistencia_adolescente as aa INNER JOIN t_adolescente as a ON a.id_adolescente_pk = aa.id_adolescente_fk WHERE aa.id_reg_asistencia_fk = ?1");
+                Query query = em.createNativeQuery("SELECT aa.id_asistencia_adolescente_pk, a.id_adolescente_pk as id_Adolescente, a.nombres, a.apellidos, a.cedula,a.documento, aa.asistio, aa.id_reg_asistencia_fk FROM t_asistencia_adolescente as aa INNER JOIN t_adolescente as a ON a.id_adolescente_pk = aa.id_adolescente_fk WHERE aa.id_reg_asistencia_fk = ?1");
                 query.setParameter(1, taller.getIdTaller());
 
                 List<Object[]> lista = (List<Object[]>) query.getResultList();
@@ -186,10 +216,13 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
                             adolescente.setCedula(a[4].toString());
                         }
                         if(a[5]!=null){
-                            asistencia.setAsistio(Boolean.valueOf(a[5].toString()));
+                            adolescente.setDocumento(a[5].toString());
                         }
                         if(a[6]!=null){
-                            tallerAux.setIdTaller(Integer.parseInt(a[6].toString()));
+                            asistencia.setAsistio(Boolean.valueOf(a[6].toString()));
+                        }
+                        if(a[6]!=null){
+                            tallerAux.setIdTaller(Integer.parseInt(a[7].toString()));
                             registro.setIdTaller(tallerAux);
                                                  
                         }
