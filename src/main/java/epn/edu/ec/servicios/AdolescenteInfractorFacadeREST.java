@@ -11,6 +11,7 @@ import epn.edu.ec.entidades.Reporte5;
 import epn.edu.ec.entidades.Reporte6N;
 import epn.edu.ec.entidades.Reporte6S;
 import epn.edu.ec.entidades.Reporte7;
+import epn.edu.ec.entidades.Reporte8;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1312,6 +1313,53 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                     lista.add(aux);
                 }
                 GenericEntity<List<Reporte7>> entidad = new GenericEntity<List<Reporte7>>(lista) {
+                };
+                return Response.ok().entity(entidad).build();
+            } else {
+                return Response.status(Response.Status.NO_CONTENT).build();
+            }
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GET
+    @Path("reporteInformesCompletos")
+    @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    public Response reporteInformesCompletos() {
+        try {
+            Query query = em.createNativeQuery("select u.cedula, u.nombres, u.apellidos, r.rol ,count(i.id_informe_pk) as \"Informes completos\" from t_informe as i\n"
+                    + "inner join t_taller as t ON t.id_taller_pk = i.id_taller_fk\n"
+                    + "inner join t_usuario as u ON u.id_usuario_pk = t.usuario_fk\n"
+                    + "inner join t_rol_centro_usuario as rcu ON rcu.id_rcu_pk = u.id_rcu_fk\n"
+                    + "inner join t_rol as r ON r.id_rol_pk = rcu.id_rol_fk\n"
+                    + "group by u.cedula, u.nombres, u.apellidos, r.rol");
+
+            List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
+            if (objetos != null && objetos.size() > 0) {
+                List<Reporte8> lista = new ArrayList<>();
+
+                for (Object[] p : objetos) {
+                    Reporte8 aux = new Reporte8();
+                    if (p[0] != null) {
+                        aux.setCedula(p[0].toString());
+                    }
+                    if (p[1] != null) {
+                        aux.setNombres(p[1].toString());
+                    }
+                    if (p[2] != null) {
+                        aux.setApellidos(p[2].toString());
+                    }
+                    if (p[3] != null) {
+                        aux.setRol(p[3].toString());
+                    }
+                    if (p[4] != null) {
+                        aux.setCantidadInformesCompletos(Integer.parseInt(p[4].toString()));
+                    }
+                    lista.add(aux);
+                }
+                GenericEntity<List<Reporte8>> entidad = new GenericEntity<List<Reporte8>>(lista) {
                 };
                 return Response.ok().entity(entidad).build();
             } else {
