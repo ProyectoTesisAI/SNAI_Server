@@ -26,7 +26,7 @@ public class Rol implements Serializable {
     @Column(name = "id_rol_pk")
     private Integer idRol;
     
-    @Size(max = 20)
+    @Size(max = 75)
     @Column(name = "rol")
     private String rol;
     
