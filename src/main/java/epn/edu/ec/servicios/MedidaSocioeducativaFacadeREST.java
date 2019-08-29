@@ -128,8 +128,8 @@ public class MedidaSocioeducativaFacadeREST extends AbstractFacade<MedidaSocioed
             return Response.status(Response.Status.BAD_REQUEST).entity(id).build();
         } else {
             try {
-                Query query = em.createNativeQuery("SELECT med_socioeducativa, tiempo_meses,tiempo_dia, (tiempo_meses*30 + tiempo_dia ) as tiempo_final_dias, tiempo_horas "
-                        + "FROM t_med_socioeducativa where t_med_socioeducativa.id_adolescente_udi_fk = ?1 order by tiempo_final_dias desc, tiempo_horas desc limit 1");
+                Query query = em.createNativeQuery("SELECT med_socioeducativa, tiempo_meses,tiempo_dia, (tiempo_meses*30 + tiempo_dia + tiempo_horas/24) as tiempo_final_dias, tiempo_horas \n" +
+                    "FROM t_med_socioeducativa where t_med_socioeducativa.id_adolescente_udi_fk = ?1 order by tiempo_final_dias desc, tiempo_horas desc limit 1");
                 query.setParameter(1, id);
 
                 List<Object[]> lista = (List<Object[]>) query.getResultList();
