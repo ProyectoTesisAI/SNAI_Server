@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -38,6 +39,12 @@ public class ItemTallerFacadeREST extends AbstractFacade<ItemTaller> {
     @Consumes({MediaType.APPLICATION_JSON})
     public ItemTaller guardarItemTaller(ItemTaller entidad) {
         return super.editar(entidad);
+    }
+    
+    @DELETE
+    @Path("{id}")
+    public void eliminar(@PathParam("id") Integer id) {
+        super.eliminar(super.buscarPorId(id));
     }
 
     @GET
