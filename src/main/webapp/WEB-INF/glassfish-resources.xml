@@ -6,7 +6,7 @@
         <property name="portNumber" value="5432"/>
         <property name="databaseName" value="SistemaReeducacion_SNAI"/>
         <property name="User" value="postgres"/>
-        <property name="Password" value="1234"/>
+        <property name="Password" value="psqlsnai2019"/>
         <property name="URL" value="jdbc:postgresql://localhost:5432/SistemaReeducacion_SNAI"/>
         <property name="driverClass" value="org.postgresql.Driver"/>
     </jdbc-connection-pool>
