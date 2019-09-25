@@ -41,12 +41,14 @@ public class TallerFacadeREST extends AbstractFacade<Taller> {
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Taller crear(Taller entidad) {
         return super.crear(entidad);
     }
 
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Taller guardarTaller(Taller entidad) {
         Taller taller = super.editar(entidad);
         return taller;
