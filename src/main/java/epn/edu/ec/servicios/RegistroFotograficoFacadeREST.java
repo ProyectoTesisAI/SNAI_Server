@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -34,8 +35,15 @@ public class RegistroFotograficoFacadeREST extends AbstractFacade<RegistroFotogr
 
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public RegistroFotografico guardarRegistroFotografico(RegistroFotografico entidad) {
         return super.editar(entidad);
+    }
+    
+    @DELETE
+    @Path("{id}")
+    public void eliminar(@PathParam("id") Integer id) {
+        super.eliminar(super.buscarPorId(id));
     }
 
     @GET
@@ -96,6 +104,7 @@ public class RegistroFotograficoFacadeREST extends AbstractFacade<RegistroFotogr
     @GET
     @Path("Informe/Movil/{id}")
     @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public List<RegistroFotograficoAux> obtenerRegistroFotograficoPorInforme2(@PathParam("id") Integer id) {
         Query query= em.createNativeQuery("SELECT * FROM t_registro_fotografico where id_informe_fk = ?1");
         query.setParameter(1, id);
@@ -134,6 +143,41 @@ public class RegistroFotograficoFacadeREST extends AbstractFacade<RegistroFotogr
     }
     
  
+    @PUT
+    @Path("Movil")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public RegistroFotograficoAux guardarRegistroFotograficoPorMovil(RegistroFotograficoAux registroFotograficoAux) {
+        
+        if(registroFotograficoAux != null){
+            RegistroFotografico registroFotografico= new RegistroFotografico();
+            registroFotografico.setIdInforme(registroFotograficoAux.getIdInforme());
+            byte[] imagenBytes= Base64.getDecoder().decode(registroFotograficoAux.getImagenAux());
+            registroFotografico.setImagen(imagenBytes);
+            
+            RegistroFotografico registroFotograficoGuardado= super.editar(registroFotografico);
+            
+            if(registroFotograficoGuardado != null){
+                
+                RegistroFotograficoAux registro= new RegistroFotograficoAux();
+                registro.setIdInforme(registroFotograficoGuardado.getIdInforme());
+                registro.setIdRegistroFotografico(registroFotograficoGuardado.getIdRegistroFotografico());
+                String imagen=Base64.getEncoder().encodeToString(registroFotograficoGuardado.getImagen());
+                registro.setImagenAux(imagen);
+                
+                return registro;
+            }
+            else{
+                return null;
+            }
+        }
+        else{
+            return null;
+        }
+        
+        
+    }
+
     
     @Override
     protected EntityManager getEntityManager() {
