@@ -27,7 +27,6 @@ import javax.ws.rs.core.Response;
 
 @Stateless
 @Path("Registro_Asistencia")
-@Secured
 public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsistencia> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -40,12 +39,14 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public RegistroAsistencia crear(RegistroAsistencia entidad) {
         return super.crear(entidad);
     }
 
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public RegistroAsistencia guardarRegistroAsistencia(RegistroAsistencia entidad) {
         return super.editar(entidad);
     }

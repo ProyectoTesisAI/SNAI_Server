@@ -28,7 +28,7 @@ public class RegistroFotografico implements Serializable {
     @Lob
     @Column(name = "imagen")
     private byte[] imagen;
-   
+    
     @JoinColumn(name = "id_informe_fk")
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Informe idInforme;
@@ -60,5 +60,4 @@ public class RegistroFotografico implements Serializable {
         this.idInforme = idInforme;
     }
 
-    
 }

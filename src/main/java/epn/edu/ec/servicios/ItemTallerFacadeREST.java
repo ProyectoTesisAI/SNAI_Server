@@ -31,12 +31,14 @@ public class ItemTallerFacadeREST extends AbstractFacade<ItemTaller> {
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public ItemTaller crear(ItemTaller entidad) {
         return super.crear(entidad);
     }
     
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public ItemTaller guardarItemTaller(ItemTaller entidad) {
         return super.editar(entidad);
     }

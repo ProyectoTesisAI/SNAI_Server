@@ -37,12 +37,14 @@ public class InformeFacadeREST extends AbstractFacade<Informe> {
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Informe crear(Informe entidad) {
         return super.crear(entidad);
     }
 
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Informe guardarInforme(Informe entidad) {
         return super.editar(entidad);
     }

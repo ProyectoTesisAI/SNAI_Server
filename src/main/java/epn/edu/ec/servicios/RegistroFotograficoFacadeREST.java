@@ -3,7 +3,9 @@ package epn.edu.ec.servicios;
 import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.Informe;
 import epn.edu.ec.entidades.RegistroFotografico;
+import epn.edu.ec.entidades.RegistroFotograficoAux;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -90,6 +92,48 @@ public class RegistroFotograficoFacadeREST extends AbstractFacade<RegistroFotogr
         }
         
     }
+    
+    @GET
+    @Path("Informe/Movil/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<RegistroFotograficoAux> obtenerRegistroFotograficoPorInforme2(@PathParam("id") Integer id) {
+        Query query= em.createNativeQuery("SELECT * FROM t_registro_fotografico where id_informe_fk = ?1");
+        query.setParameter(1, id);
+        
+        List<Object[]> lista = (List<Object[]>) query.getResultList();
+        
+        if (lista != null && lista.size() > 0) {
+
+            List<RegistroFotograficoAux> registroFotograficoAux= new ArrayList<>();
+            
+            for (Object[] a : lista) {
+                
+                RegistroFotograficoAux registro2= new RegistroFotograficoAux();
+                
+                registro2.setIdRegistroFotografico(Integer.parseInt(a[0].toString()));
+                if(a[1]!=null){
+                    String imagen=Base64.getEncoder().encodeToString((byte[]) a[1]);
+                    registro2.setImagenAux(imagen);
+                }
+                if(a[2]!= null){
+                    
+                    Informe informe= new Informe();
+                    informe.setIdInforme(Integer.parseInt(a[2].toString()));
+                    registro2.setIdInforme(informe);
+                }
+                registroFotograficoAux.add(registro2);
+
+            }
+            
+            
+            return registroFotograficoAux;
+        } else {
+            return null;
+        }
+        
+    }
+    
+ 
     
     @Override
     protected EntityManager getEntityManager() {

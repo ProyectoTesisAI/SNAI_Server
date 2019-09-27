@@ -30,12 +30,14 @@ public class AsistenciaAdolescenteFacadeREST extends AbstractFacade<AsistenciaAd
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public AsistenciaAdolescente crear(AsistenciaAdolescente entidad) {
         return super.crear(entidad);
     }
 
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public AsistenciaAdolescente guardarAsistenciaAdolescente(AsistenciaAdolescente entidad) {
         return super.editar(entidad);
     }
