@@ -27,6 +27,7 @@ import javax.ws.rs.core.Response;
 
 @Stateless
 @Path("Registro_Asistencia")
+@Secured
 public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsistencia> {
 
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
@@ -134,7 +135,7 @@ public class RegistroAsistenciaFacadeREST extends AbstractFacade<RegistroAsisten
             return Response.status(Response.Status.BAD_REQUEST).entity(cai).build();
         } else {
             try {
-                Query query = em.createNativeQuery("SELECT a.id_adolescente_pk as id_Adolescente, a.nombres, a.apellidos, a.cedula,a.documento FROM t_adolescente as a INNER JOIN t_adolescente_cai as ac ON ac.id_adolescente_cai_pk= a.id_adolescente_pk INNER JOIN t_deta_infraccion_cai as di ON di.id_adolescente_cai_fk = ac.id_adolescente_cai_pk INNER JOIN t_ejecucion_medida_cai as emc ON emc.id_ejecucion_medida_cai_pk = di.id_deta_infrac_cai_pk INNER JOIN t_cai as c ON c.id_cai_pk = emc.id_cai_fk WHERE c.cai = ?1");
+                Query query = em.createNativeQuery("SELECT a.id_adolescente_pk as id_Adolescente, a.nombres, a.apellidos, a.cedula,a.documento FROM t_adolescente as a INNER JOIN t_adolescente_cai as ac ON ac.id_adolescente_cai_pk= a.id_adolescente_pk INNER JOIN t_deta_infraccion_cai as di ON di.id_adolescente_cai_fk = ac.id_adolescente_cai_pk INNER JOIN t_ejecucion_medida_cai as emc ON emc.id_deta_infrac_cai_fk = di.id_deta_infrac_cai_pk INNER JOIN t_cai as c ON c.id_cai_pk = emc.id_cai_fk WHERE c.cai = ?1");
                 query.setParameter(1, cai.getCai());
 
                 List<Object[]> lista = (List<Object[]>) query.getResultList();
