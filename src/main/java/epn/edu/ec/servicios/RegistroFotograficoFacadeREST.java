@@ -152,7 +152,8 @@ public class RegistroFotograficoFacadeREST extends AbstractFacade<RegistroFotogr
         if(registroFotograficoAux != null){
             RegistroFotografico registroFotografico= new RegistroFotografico();
             registroFotografico.setIdInforme(registroFotograficoAux.getIdInforme());
-            byte[] imagenBytes= Base64.getDecoder().decode(registroFotograficoAux.getImagenAux());
+            //byte[] imagenBytes= Base64.getDecoder().decode(registroFotograficoAux.getImagenAux());
+            byte[] imagenBytes= Base64.getMimeDecoder().decode(registroFotograficoAux.getImagenAux());
             registroFotografico.setImagen(imagenBytes);
             
             RegistroFotografico registroFotograficoGuardado= super.editar(registroFotografico);
