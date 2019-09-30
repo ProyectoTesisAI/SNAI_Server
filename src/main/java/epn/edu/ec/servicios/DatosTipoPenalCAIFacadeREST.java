@@ -1,5 +1,6 @@
 package epn.edu.ec.servicios;
 
+import epn.edu.ec.anotacion.Secured;
 import epn.edu.ec.entidades.DatosTipoPenalCAI;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -14,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
-//@Secured
+@Secured
 @Path("Datos_Tipo_Penal_Cai")
 public class DatosTipoPenalCAIFacadeREST extends AbstractFacade<DatosTipoPenalCAI> {
 
