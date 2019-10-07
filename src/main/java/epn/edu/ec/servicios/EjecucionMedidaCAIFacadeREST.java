@@ -58,7 +58,41 @@ public class EjecucionMedidaCAIFacadeREST extends AbstractFacade<EjecucionMedida
     public List<EjecucionMedidaCAI> listarTodo() {
         return super.listarTodo();
     }
+    
+    
+    @GET
+    @Path("ListaMedidasPorIdAdolescente/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response listarMedidasPorIdAdolescenteCAI(@PathParam("id") Integer id) {
+        
+        if (id == null || id <= 0) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(id).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select emc.* from t_adolescente_cai as ac inner join t_deta_infraccion_cai as di on ac.id_adolescente_cai_pk=di.id_adolescente_cai_fk\n" +
+                "inner join t_ejecucion_medida_cai as emc on di.id_deta_infrac_cai_pk=emc.id_deta_infrac_cai_fk where ac.id_adolescente_cai_pk = ?1", EjecucionMedidaCAI.class);
+                query.setParameter(1, id);
 
+                List<EjecucionMedidaCAI> lista = query.getResultList();
+
+                if (!lista.isEmpty()) {
+
+                    List<EjecucionMedidaCAI> infracciones = new ArrayList<>();
+                    infracciones=lista;
+
+                    GenericEntity<List<EjecucionMedidaCAI>> entidad = new GenericEntity<List<EjecucionMedidaCAI>>(infracciones) {};
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (Exception e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+    
     @POST
     @Path("ListaMedidasPorInfraccionCAI")
     @Produces({MediaType.APPLICATION_JSON})
