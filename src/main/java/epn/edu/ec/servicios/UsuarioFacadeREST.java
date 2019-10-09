@@ -127,7 +127,11 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
             return Response.status(Response.Status.BAD_REQUEST).entity(usuario).build();
         } else {
             try {
-                Query query = em.createNativeQuery("select * from t_usuario as u inner join t_rol_centro_usuario as rcu on rcu.id_rcu_pk=u.id_rcu_fk inner join t_rol as r on r.id_rol_pk = rcu.id_rol_fk where u.usuario = ? and u.contrasenia = ? and u.activo=true", Usuario.class);
+                Query query = em.createNativeQuery(""
+                        + "select * from t_usuario as u "
+                        + "inner join t_rol_centro_usuario as rcu on rcu.id_rcu_pk=u.id_rcu_fk "
+                        + "inner join t_rol as r on r.id_rol_pk = rcu.id_rol_fk "
+                        + "where u.usuario = ? and u.contrasenia = ? and u.activo=true", Usuario.class);
                 query.setParameter(1, usuario.getUsuario());
                 query.setParameter(2, usuario.getContraseña());
 
@@ -155,7 +159,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
 
                     GenericEntity<User> entidad = new GenericEntity<User>(user) {
                     };
-                    //return Response.ok().header(HttpHeaders.AUTHORIZATION, token).entity(entidad).build();
+                    
                     return Response.ok().entity(entidad).build();
                 } else {
                     return Response.status(Response.Status.NO_CONTENT).build();
