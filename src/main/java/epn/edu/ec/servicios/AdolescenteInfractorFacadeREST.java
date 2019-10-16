@@ -40,6 +40,8 @@ import javax.ws.rs.core.SecurityContext;
 @Path("Adolescente_Infractor")
 public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteInfractor> {
 
+    //Inyecta una referencia válida al objeto EntityManager 
+    //creada a partir de la unidad de persistencia SistemaSNAI_UnidadPersistencia
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
     private EntityManager em;
 

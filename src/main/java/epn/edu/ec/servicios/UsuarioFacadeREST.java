@@ -44,6 +44,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Secured
     @Override
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Usuario crear(Usuario entidad) {
         super.crear(entidad);
         return entidad;
@@ -52,6 +53,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @PUT
     @Secured
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Usuario guardarUsuario(Usuario entidad) {
         super.editar(entidad);
         return entidad;
@@ -182,7 +184,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         String jwtToken = Jwts.builder()
                 .claim("roles", rol)
                 .setSubject(usuario)
-                .setIssuer("http://localhost:40040/Sistema_SNAI_Servidor/webresources/Usuario/login")
+                .setIssuer("http://localhost:8181/Sistema_SNAI_Servidor")
                 .setIssuedAt(issueDate)
                 .setExpiration(expireDate)
                 .signWith(SignatureAlgorithm.HS512, RestSecurityFilter.KEY)
