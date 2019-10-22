@@ -660,6 +660,124 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
     }
 
     @POST
+    @Path("movil/reporteMedidaSocioeducativaCAI")
+    @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    public Response reporteMedidaSocioeducativaMovilCAI(Reporte4 medida) {
+
+        if (medida == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(medida).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, ca.cai, ai.nombres, ai.apellidos, dicai.tipo_penal, emc.med_cautelar from t_deta_infraccion_cai as dicai\n"
+                        + "inner join t_adolescente_cai as acai on acai.id_adolescente_cai_pk = dicai.id_adolescente_cai_fk\n"
+                        + "inner join t_adolescente as ai on ai.id_adolescente_pk = acai.id_adolescente_cai_pk\n"
+                        + "inner join t_ejecucion_medida_cai as emc ON emc.id_deta_infrac_cai_fk = dicai.id_deta_infrac_cai_pk\n"
+                        + "inner join t_cai as ca on ca.id_cai_pk = emc.id_cai_fk\n"
+                        + "where emc.tipo_medida=?1 and emc.med_cautelar=?2");
+                query.setParameter(1, medida.getTipoDelito());
+                query.setParameter(2, medida.getMedidaSocioeducativa());
+
+                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
+                if (objetos != null && objetos.size() > 0) {
+                    List<Reporte4> lista = new ArrayList<>();
+
+                    for (Object[] p : objetos) {
+                        Reporte4 aux = new Reporte4();
+                        if (p[0] != null) {
+                            aux.setNumero(Integer.parseInt(p[0].toString()));
+                        }
+                        if (p[1] != null) {
+                            aux.setCai_uzdi(p[1].toString());
+                        }
+                        if (p[2] != null) {
+                            aux.setNombres(p[2].toString());
+                        }
+                        if (p[3] != null) {
+                            aux.setApellidos(p[3].toString());
+                        }
+                        if (p[4] != null) {
+                            aux.setTipoDelito(p[4].toString());
+                        }
+                        if (p[5] != null) {
+                            aux.setMedidaSocioeducativa(p[5].toString());
+                        }
+
+                        lista.add(aux);
+                    }
+                    GenericEntity<List<Reporte4>> entidad = new GenericEntity<List<Reporte4>>(lista) {
+                    };
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (NumberFormatException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+    
+    @POST
+    @Path("movil/reporteMedidaSocioeducativaUDI")
+    @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    public Response reporteMedidaSocioeducativaMovilUDI(Reporte4 medidaSocioeducativa) {
+
+        if (medidaSocioeducativa == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(medidaSocioeducativa).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, u.udi, ai.nombres, ai.apellidos, ii.tipo_infraccion, ms.med_socioeducativa from t_info_infraccion as ii\n"
+                        + "inner join t_adolescente_udi as audi on audi.id_adolescente_udi_pk = ii.id_info_infrac_pk\n"
+                        + "inner join t_adolescente as ai ON ai.id_adolescente_pk = audi.id_adolescente_udi_pk\n"
+                        + "inner join t_unidad_zonal as uz on uz.id_unidad_zonal_pk = audi.id_adolescente_udi_pk\n"
+                        + "inner join t_udi as u ON u.id_udi_pk = uz.id_udi_fk\n"
+                        + "inner join t_med_socioeducativa as ms ON ms.id_adolescente_udi_fk = audi.id_adolescente_udi_pk\n"
+                        + "where ms.med_socioeducativa=?1");
+                query.setParameter(1, medidaSocioeducativa.getMedidaSocioeducativa());
+
+                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
+                if (objetos != null && objetos.size() > 0) {
+                    List<Reporte4> lista = new ArrayList<>();
+
+                    for (Object[] p : objetos) {
+                        Reporte4 aux = new Reporte4();
+                        if (p[0] != null) {
+                            aux.setNumero(Integer.parseInt(p[0].toString()));
+                        }
+                        if (p[1] != null) {
+                            aux.setCai_uzdi(p[1].toString());
+                        }
+                        if (p[2] != null) {
+                            aux.setNombres(p[2].toString());
+                        }
+                        if (p[3] != null) {
+                            aux.setApellidos(p[3].toString());
+                        }
+                        if (p[4] != null) {
+                            aux.setTipoDelito(p[4].toString());
+                        }
+                        if (p[5] != null) {
+                            aux.setMedidaSocioeducativa(p[5].toString());
+                        }
+
+                        lista.add(aux);
+                    }
+                    GenericEntity<List<Reporte4>> entidad = new GenericEntity<List<Reporte4>>(lista) {
+                    };
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (NumberFormatException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+    @POST
     @Path("reporteFechaIngesoCAI")
     @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
     @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
