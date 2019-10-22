@@ -40,6 +40,8 @@ import javax.ws.rs.core.SecurityContext;
 @Path("Adolescente_Infractor")
 public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteInfractor> {
 
+    //Inyecta una referencia válida al objeto EntityManager 
+    //creada a partir de la unidad de persistencia SistemaSNAI_UnidadPersistencia
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
     private EntityManager em;
 
@@ -419,7 +421,7 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
         }
     }
 
-    @POST
+        @POST
     @Path("reporteNacionalidadCAI")
     @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
     @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
@@ -498,6 +500,128 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                         + "inner join t_udi as u ON u.id_udi_pk = uz.id_udi_fk\n"
                         + "where ai.nacionalidad =?1");
                 query.setParameter(1, nacionalidadUDI);
+
+                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
+                if (objetos != null && objetos.size() > 0) {
+                    List<Reporte3> lista = new ArrayList<>();
+
+                    for (Object[] p : objetos) {
+                        Reporte3 aux = new Reporte3();
+                        if (p[0] != null) {
+                            aux.setNumero(Integer.parseInt(p[0].toString()));
+                        }
+                        if (p[1] != null) {
+                            aux.setCai_uzdi(p[1].toString());
+                        }
+                        if (p[2] != null) {
+                            aux.setNombres(p[2].toString());
+                        }
+                        if (p[3] != null) {
+                            aux.setApellidos(p[3].toString());
+                        }
+                        if (p[4] != null) {
+                            aux.setNacionalidad(p[4].toString());
+                        }
+                        if (p[5] != null) {
+                            aux.setPaisOrigen(p[5].toString());
+                        }
+                        if (p[6] != null) {
+                            aux.setTipoDelito(p[6].toString());
+                        }
+                        lista.add(aux);
+                    }
+                    GenericEntity<List<Reporte3>> entidad = new GenericEntity<List<Reporte3>>(lista) {
+                    };
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (NumberFormatException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+    
+    @POST
+    @Path("movil/reporteNacionalidadCAI")
+    @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    public Response reporteNacionalidadPaisCAIMovil(Reporte3 nacionalidadCAI) {
+
+        if (nacionalidadCAI == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(nacionalidadCAI).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, ca.cai, ai.nombres, ai.apellidos, ai.nacionalidad, ig.pais_nacimiento, dicai.tipo_penal from t_deta_infraccion_cai as dicai\n"
+                        + "inner join t_adolescente_cai as acai on acai.id_adolescente_cai_pk = dicai.id_adolescente_cai_fk\n"
+                        + "inner join t_adolescente as ai on ai.id_adolescente_pk = acai.id_adolescente_cai_pk\n"
+                        + "inner join t_id_geografica as ig ON ig.id_geografica_pk = ai.id_adolescente_pk\n"
+                        + "inner join t_ejecucion_medida_cai as emc ON emc.id_deta_infrac_cai_fk = dicai.id_deta_infrac_cai_pk\n"
+                        + "inner join t_cai as ca on ca.id_cai_pk = emc.id_cai_fk\n"
+                        + "where ai.nacionalidad = ?1");
+                query.setParameter(1, nacionalidadCAI.getNacionalidad());
+
+                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
+                if (objetos != null && objetos.size() > 0) {
+                    List<Reporte3> lista = new ArrayList<>();
+
+                    for (Object[] p : objetos) {
+                        Reporte3 aux = new Reporte3();
+                        if (p[0] != null) {
+                            aux.setNumero(Integer.parseInt(p[0].toString()));
+                        }
+                        if (p[1] != null) {
+                            aux.setCai_uzdi(p[1].toString());
+                        }
+                        if (p[2] != null) {
+                            aux.setNombres(p[2].toString());
+                        }
+                        if (p[3] != null) {
+                            aux.setApellidos(p[3].toString());
+                        }
+                        if (p[4] != null) {
+                            aux.setNacionalidad(p[4].toString());
+                        }
+                        if (p[5] != null) {
+                            aux.setPaisOrigen(p[5].toString());
+                        }
+                        if (p[6] != null) {
+                            aux.setTipoDelito(p[6].toString());
+                        }
+                        lista.add(aux);
+                    }
+                    GenericEntity<List<Reporte3>> entidad = new GenericEntity<List<Reporte3>>(lista) {
+                    };
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (NumberFormatException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+    @POST
+    @Path("movil/reporteNacionalidadUDI")
+    @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    public Response reporteNacionalidadPaisUDIMovil(Reporte3 nacionalidadUDI) {
+
+        if (nacionalidadUDI == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(nacionalidadUDI).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, u.udi, ai.nombres, ai.apellidos, ai.nacionalidad, ig.pais_nacimiento ,ii.tipo_infraccion from t_info_infraccion as ii\n"
+                        + "inner join t_adolescente_udi as audi on audi.id_adolescente_udi_pk = ii.id_info_infrac_pk\n"
+                        + "inner join t_adolescente as ai ON ai.id_adolescente_pk = audi.id_adolescente_udi_pk\n"
+                        + "inner join t_id_geografica as ig ON ig.id_geografica_pk = ai.id_adolescente_pk\n"
+                        + "inner join t_unidad_zonal as uz on uz.id_unidad_zonal_pk = audi.id_adolescente_udi_pk\n"
+                        + "inner join t_udi as u ON u.id_udi_pk = uz.id_udi_fk\n"
+                        + "where ai.nacionalidad =?1");
+                query.setParameter(1, nacionalidadUDI.getNacionalidad());
 
                 List<Object[]> objetos = (List<Object[]>) query.getResultList();
 

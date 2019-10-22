@@ -37,7 +37,7 @@ public class RepresentanteFacadeREST extends AbstractFacade<Representante> {
     
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
-    public Representante guardarRepresentante(Representante entidad) {
+    public Representante editarRepresentante(Representante entidad) {
         return super.editar(entidad);
     }
 

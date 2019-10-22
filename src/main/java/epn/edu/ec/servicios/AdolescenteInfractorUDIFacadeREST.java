@@ -25,11 +25,18 @@ import javax.ws.rs.core.Response;
 @Path("Adolescente_Udi")
 public class AdolescenteInfractorUDIFacadeREST extends AbstractFacade<AdolescenteInfractorUDI> {
 
+    //Inyecta una referencia válida al objeto EntityManager 
+    //creada a partir de la unidad de persistencia SistemaSNAI_UnidadPersistencia
     @PersistenceContext(unitName = "SistemaSNAI_UnidadPersistencia")
     private EntityManager em;
 
     public AdolescenteInfractorUDIFacadeREST() {
         super(AdolescenteInfractorUDI.class);
+    }
+    
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
     }
 
     @POST
@@ -40,8 +47,9 @@ public class AdolescenteInfractorUDIFacadeREST extends AbstractFacade<Adolescent
     }
 
     @PUT
+    @Override
     @Consumes({MediaType.APPLICATION_JSON})
-    public AdolescenteInfractorUDI guardarEdicion(AdolescenteInfractorUDI entidad) {
+    public AdolescenteInfractorUDI editar(AdolescenteInfractorUDI entidad) {
         return super.editar(entidad);
     }
 
@@ -157,9 +165,5 @@ public class AdolescenteInfractorUDIFacadeREST extends AbstractFacade<Adolescent
         }
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
 
 }
