@@ -788,6 +788,64 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
             }
         }
     }
+    
+    @POST
+    @Path("movil/reporteNivelEducacionSUDI")
+    @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    public Response reporteNivelEducacionMovilSUDI(Reporte6S nivelEducacion) {
+
+        if (nivelEducacion == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(nivelEducacion).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, u.udi, ai.nombres, ai.apellidos, ee.estudia, ee.nivel_edu_actual from t_eje_educativo as ee\n"
+                        + "inner join t_adolescente as ai ON ai.id_adolescente_pk = ee.id_eje_educativo_pk\n"
+                        + "inner join t_adolescente_udi as aiu ON aiu.id_adolescente_udi_pk = ai.id_adolescente_pk\n"
+                        + "inner join t_unidad_zonal as uz ON uz.id_unidad_zonal_pk = aiu.id_adolescente_udi_pk\n"
+                        + "inner join t_udi as u ON u.id_udi_pk = uz.id_udi_fk\n"
+                        + "where ee.estudia=true and ee.nivel_edu_actual=?1");
+                query.setParameter(1, nivelEducacion.getNivelEducativo());
+
+                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
+                if (objetos != null && objetos.size() > 0) {
+                    List<Reporte6S> lista = new ArrayList<>();
+
+                    for (Object[] p : objetos) {
+                        Reporte6S aux = new Reporte6S();
+                        if (p[0] != null) {
+                            aux.setNumero(Integer.parseInt(p[0].toString()));
+                        }
+                        if (p[1] != null) {
+                            aux.setCai_uzdi(p[1].toString());
+                        }
+                        if (p[2] != null) {
+                            aux.setNombres(p[2].toString());
+                        }
+                        if (p[3] != null) {
+                            aux.setApellidos(p[3].toString());
+                        }
+                        if (p[4] != null) {
+                            aux.setEstudia(Boolean.parseBoolean(p[4].toString()));
+                        }
+                        if (p[5] != null) {
+                            aux.setNivelEducativo(p[5].toString());
+                        }
+
+                        lista.add(aux);
+                    }
+                    GenericEntity<List<Reporte6S>> entidad = new GenericEntity<List<Reporte6S>>(lista) {
+                    };
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (NumberFormatException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
 
     @POST
     @Path("reporteNivelEducacionSCAI")
@@ -807,6 +865,65 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                         + "inner join t_cai as cai ON cai.id_cai_pk = emc.id_cai_fk\n"
                         + "where ee.estudia=true and ee.nivel_edu_actual=?1");
                 query.setParameter(1, nivelEducacion);
+
+                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
+                if (objetos != null && objetos.size() > 0) {
+                    List<Reporte6S> lista = new ArrayList<>();
+
+                    for (Object[] p : objetos) {
+                        Reporte6S aux = new Reporte6S();
+                        if (p[0] != null) {
+                            aux.setNumero(Integer.parseInt(p[0].toString()));
+                        }
+                        if (p[1] != null) {
+                            aux.setCai_uzdi(p[1].toString());
+                        }
+                        if (p[2] != null) {
+                            aux.setNombres(p[2].toString());
+                        }
+                        if (p[3] != null) {
+                            aux.setApellidos(p[3].toString());
+                        }
+                        if (p[4] != null) {
+                            aux.setEstudia(Boolean.parseBoolean(p[4].toString()));
+                        }
+                        if (p[5] != null) {
+                            aux.setNivelEducativo(p[5].toString());
+                        }
+
+                        lista.add(aux);
+                    }
+                    GenericEntity<List<Reporte6S>> entidad = new GenericEntity<List<Reporte6S>>(lista) {
+                    };
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (NumberFormatException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+    
+    @POST
+    @Path("movil/reporteNivelEducacionSCAI")
+    @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    public Response reporteNivelEducacionMovilSCAI(Reporte6S nivelEducacion) {
+
+        if (nivelEducacion == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(nivelEducacion).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, cai.cai, ai.nombres, ai.apellidos, ee.estudia, ee.nivel_edu_actual from t_eje_educativo as ee\n"
+                        + "inner join t_adolescente as ai ON ai.id_adolescente_pk = ee.id_eje_educativo_pk\n"
+                        + "inner join t_adolescente_cai as aic ON aic.id_adolescente_cai_pk = ai.id_adolescente_pk\n"
+                        + "inner join t_deta_infraccion_cai as di ON di.id_adolescente_cai_fk = aic.id_adolescente_cai_pk\n"
+                        + "inner join t_ejecucion_medida_cai as emc ON emc.id_deta_infrac_cai_fk = di.id_deta_infrac_cai_pk\n"
+                        + "inner join t_cai as cai ON cai.id_cai_pk = emc.id_cai_fk\n"
+                        + "where ee.estudia=true and ee.nivel_edu_actual=?1");
+                query.setParameter(1, nivelEducacion.getNivelEducativo());
 
                 List<Object[]> objetos = (List<Object[]>) query.getResultList();
 
@@ -1167,6 +1284,252 @@ public class AdolescenteInfractorFacadeREST extends AbstractFacade<AdolescenteIn
                         + "inner join t_udi as u ON u.id_udi_pk = uz.id_udi_fk\n"
                         + "where ee.estudia=true and cast(date_part('year',age(ai.fecha_nacimiento)) as integer)=?1");
                 query.setParameter(1, Integer.parseInt(edad));
+
+                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
+                if (objetos != null && objetos.size() > 0) {
+                    List<Reporte6S> lista = new ArrayList<>();
+
+                    for (Object[] p : objetos) {
+                        Reporte6S aux = new Reporte6S();
+                        if (p[0] != null) {
+                            aux.setNumero(Integer.parseInt(p[0].toString()));
+                        }
+                        if (p[1] != null) {
+                            aux.setCai_uzdi(p[1].toString());
+                        }
+                        if (p[2] != null) {
+                            aux.setNombres(p[2].toString());
+                        }
+                        if (p[3] != null) {
+                            aux.setApellidos(p[3].toString());
+                        }
+                        if (p[4] != null) {
+                            aux.setEdad(Integer.parseInt(p[4].toString()));
+                        }
+                        if (p[5] != null) {
+                            aux.setEstudia(Boolean.parseBoolean(p[5].toString()));
+                        }
+                        if (p[6] != null) {
+                            aux.setNivelEducativo(p[6].toString());
+                        }
+
+                        lista.add(aux);
+                    }
+                    GenericEntity<List<Reporte6S>> entidad = new GenericEntity<List<Reporte6S>>(lista) {
+                    };
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (NumberFormatException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+    
+    @POST
+    @Path("movil/reporteEdadNivelEducativoNoUDI")
+    @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    public Response reporteEdadNivelEducativoNoUDI(Reporte6N edad) {
+
+        if (edad == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(edad).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, u.udi, ai.nombres, ai.apellidos,cast(date_part('year',age(ai.fecha_nacimiento)) as integer) as EDAD, ee.estudia, ee.razon_no_estudia from t_eje_educativo as ee\n"
+                        + "inner join t_adolescente as ai ON ai.id_adolescente_pk = ee.id_eje_educativo_pk\n"
+                        + "inner join t_adolescente_udi as aiu ON aiu.id_adolescente_udi_pk = ai.id_adolescente_pk\n"
+                        + "inner join t_unidad_zonal as uz ON uz.id_unidad_zonal_pk = aiu.id_adolescente_udi_pk\n"
+                        + "inner join t_udi as u ON u.id_udi_pk = uz.id_udi_fk\n"
+                        + "where ee.estudia=false and cast(date_part('year',age(ai.fecha_nacimiento)) as integer)=?1");
+                query.setParameter(1, edad.getEdad());
+
+                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
+                if (objetos != null && objetos.size() > 0) {
+                    List<Reporte6N> lista = new ArrayList<>();
+
+                    for (Object[] p : objetos) {
+                        Reporte6N aux = new Reporte6N();
+                        if (p[0] != null) {
+                            aux.setNumero(Integer.parseInt(p[0].toString()));
+                        }
+                        if (p[1] != null) {
+                            aux.setCai_uzdi(p[1].toString());
+                        }
+                        if (p[2] != null) {
+                            aux.setNombres(p[2].toString());
+                        }
+                        if (p[3] != null) {
+                            aux.setApellidos(p[3].toString());
+                        }
+                        if (p[4] != null) {
+                            aux.setEdad(Integer.parseInt(p[4].toString()));
+                        }
+                        if (p[5] != null) {
+                            aux.setEstudia(Boolean.parseBoolean(p[5].toString()));
+                        }
+                        if (p[6] != null) {
+                            aux.setRazonNoEstudia(p[6].toString());
+                        }
+
+                        lista.add(aux);
+                    }
+                    GenericEntity<List<Reporte6N>> entidad = new GenericEntity<List<Reporte6N>>(lista) {
+                    };
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (NumberFormatException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+    @POST
+    @Path("movil/reporteEdadNivelEducativoNoCAI")
+    @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    public Response reporteEdadNivelEducativoNoCAI(Reporte6N edad) {
+
+        if (edad == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(edad).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, cai.cai, ai.nombres, ai.apellidos,cast(date_part('year',age(ai.fecha_nacimiento)) as integer) as EDAD, ee.estudia, ee.razon_no_estudia from t_eje_educativo as ee\n"
+                        + "inner join t_adolescente as ai ON ai.id_adolescente_pk = ee.id_eje_educativo_pk\n"
+                        + "inner join t_adolescente_cai as aic ON aic.id_adolescente_cai_pk = ai.id_adolescente_pk\n"
+                        + "inner join t_deta_infraccion_cai as di ON di.id_adolescente_cai_fk = aic.id_adolescente_cai_pk\n"
+                        + "inner join t_ejecucion_medida_cai as emc ON emc.id_deta_infrac_cai_fk = di.id_deta_infrac_cai_pk\n"
+                        + "inner join t_cai as cai ON cai.id_cai_pk = emc.id_cai_fk\n"
+                        + "where ee.estudia=false and cast(date_part('year',age(ai.fecha_nacimiento)) as integer)=?1");
+                query.setParameter(1, edad.getEdad());
+
+                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
+                if (objetos != null && objetos.size() > 0) {
+                    List<Reporte6N> lista = new ArrayList<>();
+
+                    for (Object[] p : objetos) {
+                        Reporte6N aux = new Reporte6N();
+                        if (p[0] != null) {
+                            aux.setNumero(Integer.parseInt(p[0].toString()));
+                        }
+                        if (p[1] != null) {
+                            aux.setCai_uzdi(p[1].toString());
+                        }
+                        if (p[2] != null) {
+                            aux.setNombres(p[2].toString());
+                        }
+                        if (p[3] != null) {
+                            aux.setApellidos(p[3].toString());
+                        }
+                        if (p[4] != null) {
+                            aux.setEdad(Integer.parseInt(p[4].toString()));
+                        }
+                        if (p[5] != null) {
+                            aux.setEstudia(Boolean.parseBoolean(p[5].toString()));
+                        }
+                        if (p[6] != null) {
+                            aux.setRazonNoEstudia(p[6].toString());
+                        }
+
+                        lista.add(aux);
+                    }
+                    GenericEntity<List<Reporte6N>> entidad = new GenericEntity<List<Reporte6N>>(lista) {
+                    };
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (NumberFormatException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+    @POST
+    @Path("movil/reporteEdadNivelEducativoSiCAI")
+    @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    public Response reporteEdadNivelEducativoSiCAI(Reporte6S edad) {
+
+        if (edad == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(edad).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, cai.cai, ai.nombres, ai.apellidos,cast(date_part('year',age(ai.fecha_nacimiento)) as integer) as EDAD, ee.estudia, ee.nivel_edu_actual from t_eje_educativo as ee\n"
+                        + "inner join t_adolescente as ai ON ai.id_adolescente_pk = ee.id_eje_educativo_pk\n"
+                        + "inner join t_adolescente_cai as aic ON aic.id_adolescente_cai_pk = ai.id_adolescente_pk\n"
+                        + "inner join t_deta_infraccion_cai as di ON di.id_adolescente_cai_fk = aic.id_adolescente_cai_pk\n"
+                        + "inner join t_ejecucion_medida_cai as emc ON emc.id_deta_infrac_cai_fk = di.id_deta_infrac_cai_pk\n"
+                        + "inner join t_cai as cai ON cai.id_cai_pk = emc.id_cai_fk\n"
+                        + "where ee.estudia=true and cast(date_part('year',age(ai.fecha_nacimiento)) as integer)=?1");
+                query.setParameter(1, edad.getEdad());
+
+                List<Object[]> objetos = (List<Object[]>) query.getResultList();
+
+                if (objetos != null && objetos.size() > 0) {
+                    List<Reporte6S> lista = new ArrayList<>();
+
+                    for (Object[] p : objetos) {
+                        Reporte6S aux = new Reporte6S();
+                        if (p[0] != null) {
+                            aux.setNumero(Integer.parseInt(p[0].toString()));
+                        }
+                        if (p[1] != null) {
+                            aux.setCai_uzdi(p[1].toString());
+                        }
+                        if (p[2] != null) {
+                            aux.setNombres(p[2].toString());
+                        }
+                        if (p[3] != null) {
+                            aux.setApellidos(p[3].toString());
+                        }
+                        if (p[4] != null) {
+                            aux.setEdad(Integer.parseInt(p[4].toString()));
+                        }
+                        if (p[5] != null) {
+                            aux.setEstudia(Boolean.parseBoolean(p[5].toString()));
+                        }
+                        if (p[6] != null) {
+                            aux.setNivelEducativo(p[6].toString());
+                        }
+
+                        lista.add(aux);
+                    }
+                    GenericEntity<List<Reporte6S>> entidad = new GenericEntity<List<Reporte6S>>(lista) {
+                    };
+                    return Response.ok().entity(entidad).build();
+                } else {
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                }
+            } catch (NumberFormatException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+    @POST
+    @Path("movil/reporteEdadNivelEducativoSiUDI")
+    @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
+    public Response reporteEdadNivelEducativoSiUDI(Reporte6S edad) {
+
+        if (edad == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(edad).build();
+        } else {
+            try {
+                Query query = em.createNativeQuery("select row_number() over (order by ai.nombres) as ide, u.udi, ai.nombres, ai.apellidos,cast(date_part('year',age(ai.fecha_nacimiento)) as integer) as EDAD, ee.estudia, ee.nivel_edu_actual from t_eje_educativo as ee\n"
+                        + "inner join t_adolescente as ai ON ai.id_adolescente_pk = ee.id_eje_educativo_pk\n"
+                        + "inner join t_adolescente_udi as aiu ON aiu.id_adolescente_udi_pk = ai.id_adolescente_pk\n"
+                        + "inner join t_unidad_zonal as uz ON uz.id_unidad_zonal_pk = aiu.id_adolescente_udi_pk\n"
+                        + "inner join t_udi as u ON u.id_udi_pk = uz.id_udi_fk\n"
+                        + "where ee.estudia=true and cast(date_part('year',age(ai.fecha_nacimiento)) as integer)=?1");
+                query.setParameter(1, edad.getEdad());
 
                 List<Object[]> objetos = (List<Object[]>) query.getResultList();
 
